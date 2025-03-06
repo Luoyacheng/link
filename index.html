@@ -3,8 +3,14 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>洛娅橙主页</title>
+  <title>洛娅橙-阅读主页</title>
   <style>
+    html {
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       margin: 0;
       display: flex;
@@ -15,46 +21,263 @@
       /* 垂直居中 */
       min-height: 80vh;
       width: 100vw;
+      background-color: white;
+      /* 默认浅色背景 */
+      color: black;
+      /* 默认文字颜色 */
+    }
+
+    body::-webkit-scrollbar {
+      display: none;
+      /* 隐藏滚动条 */
     }
 
     .toutu {
+      position: relative;
       width: 100vw;
+      overflow-x: hidden;
+      /* 防止溢出产生横向滚动条 */
+    }
+
+    .toutu img {
+      width: 100%;
+      max-width: 900px;
+      /* 最大宽度值 */
+    }
+
+    .open-btn {
+      font-size: 16px;
+      cursor: pointer;
+      background-color: rgba(51, 51, 51, 0.9);
+      color: white;
+      padding: 4px 6px;
+      border: none;
+      position: fixed;
+      left: 10px;
+      top: 10px;
+      z-index: 2;
+      border-radius: 5px;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    /* 侧边栏样式 */
+    .sidebar {
+      height: 100%;
+      width: 200px;
+      position: fixed;
+      top: 0;
+      left: -200px;
+      background-color: #333;
+      padding-top: 40px;
+      transition: 0.4s;
+      z-index: 3;
+    }
+
+    /* 侧边栏链接样式 */
+    .sidebar a {
+      padding: 15px 25px;
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+      display: block;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      background-color: #555;
+    }
+
+    /* 侧边栏激活状态 */
+    .sidebar.active {
+      left: 0;
+    }
+
+    /* 遮罩，关闭侧边栏 */
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+      display: none;
+    }
+
+    .sidebar.active+.sidebar-overlay {
+      display: block;
+    }
+
+    /* 新增关闭按钮样式 */
+    .close-btn {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      width: 24px;
+      height: 24px;
+      background: rgba(251, 251, 251, 0.3);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      z-index: 1001;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .close-btn:hover {
+      background: rgba(51, 51, 51, 0.3);
+      transform: rotate(90deg);
+    }
+
+    /* 检测深色模式 */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #1a1a1a;
+        color: white;
+      }
     }
 
     .lyctxt {
       width: 100%;
       white-space: pre-wrap;
       /* 保留换行符 */
+      display: none;
+      /* 默认隐藏所有内容区块 */
+    }
+
+    .lyctxt.active {
+      display: block;
+      /* 激活时显示 */
+    }
+
+    .lyctxt a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .lyctxt a:visited {
+      color: #6610f2;
+    }
+
+    .lyctxt a:active {
+      color: #ff4141;
     }
   </style>
 </head>
 
 <body>
-  <img src="https://img.picui.cn/free/2025/03/06/67c9376662e4f.jpg"
-    alt="图片加载失败，不重要啦" class="toutu">
-  <div class="lyctxt">
-#1 @洛娅橙：
-tab 欢迎使用本订阅源。
-tab pixiv书源需要特殊网络请自行解决；
-tab 18AV订阅源还在计划中。
-tab 如果书源和订阅源使用异常，请使用测试版
-[阅读测试版APP](https://miaogongzi.lanzout.com/b01rgkhhe)
-<hr>
-友链
+  <div class="toutu">
+    <img
+      src="https://cdn.cdnjson.com/pic.html?url=https://gd-hbimg.huaban.com/d2e4dd6928850ce74c0a0318692a4fc238c7dfbf34025-1Z8m0l_fw1200webp"
+      alt="图片加载失败，不重要啦">
+    <button class="open-btn" onclick="toggleSidebar()">☰</button>
+  </div>
+  <div class="sidebar" id="mySidebar">
+    <button class="close-btn" onclick="closeSidebar(event)">╳</button>
+    <a href="#" class="switch-link" data-target="t1">首页</a>
+    <a href="https://pd.qq.com/s/4x9ejv73" target="_blank">八叉书库讲解</a>
+    <a href="#" class="switch-link" data-target="t2">pixiv讲解</a>
+    <a href="#">联系我</a>
+  </div>
+  <div class="sidebar-overlay" onclick="closeSidebar(event)"></div>
 
-[小寒发布页](https://qyyuapi.com/)
+  <div class="lyctxt t1 active">
+    #2 @洛娅橙：
+    tab 欢迎来到洛娅橙个人主页--阅读。🎉
+    tab 侧边栏里有一些书源的讲解教程。
+
+    tab 18AV订阅源还在计划中。
+    tab 如果书源和订阅源使用异常，请使用测试版。
+
+    [下载阅读测试版APP](https://miaogongzi.lanzout.com/b01rgkhhe)
+    [导入洛娅橙的订阅源](legado://import/rssSource?src=https://gitee.com/lyc486/yuedu2/raw/main/%E8%AE%A2%E9%98%85/%E6%B4%9B%E5%A8%85%E6%A9%99/lyc.json)
+    <hr>
+    友链
+    [喵公子](https://yuedu.miaogongzi.net/)
+    [源仓库](https://yckceo.vip/)
+    [小寒发布页](https://qyyuapi.com/)
+    [明月发布页](https://skybook.pages.dev/)
+  </div>
+  <div class="lyctxt t2">
+    #2 PIXIV：
+    tab 书源需要VPN和p站账号，请自行解决（[必应搜索](https://cn.bing.com/search?q=clash%20github)）。
+    tab 获取账号token方法⬇️
+    <video width="240" height="320" controls>
+      <source src="https://gitee.com/lyc486/yuedu/raw/master/pdl1.mp4" type="video/mp4">
+      抱歉，你好像无法播放视频呢。
+    </video>
+    
+       
+
+
+    [下载阅读测试版APP](https://miaogongzi.lanzout.com/b01rgkhhe)
+    [导入洛娅橙的订阅源](legado://import/rssSource?src=https://gitee.com/lyc486/yuedu2/raw/main/%E8%AE%A2%E9%98%85/%E6%B4%9B%E5%A8%85%E6%A9%99/lyc.json)
   </div>
 
 
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const container = document.querySelector('.lyctxt');
-      const text = container.innerHTML;
-      const urlRegex = /\[(.+)\]\((http.+)\)/g;
-      const html = text.replace(urlRegex, '<a href="$2" target="_blank">$1</a>').replace(/#(\d) (.+)/, '<h$1>$2</h$1>').replace(/~~(.+)~~/, '<del>$1</del>').replaceAll('tab ', '　　');
-      container.innerHTML = html;
+      const containers = document.querySelectorAll('.lyctxt');
+      // 遍历每个容器
+      containers.forEach(container => {
+        let text = container.innerHTML;
+        // 定义替换规则
+        const replaceRules = [
+          { regex: /\[(.+?)\]\((.+?)\)/g, replacement: '<a href="$2" target="_blank">$1</a>' }, //链接
+          { regex: /#(\d) (.+)/g, replacement: '<h$1 style="margin:0;line-height:1em;">$2</h$1>' }, //标题
+          { regex: /~~(.+?)~~/g, replacement: '<del>$1</del>' }, //删除
+          { regex: /.*tab (.*)/g, replacement: '<p style="margin:0;line-height:0.2em;">　　$1</p>' }, //缩进
+          { regex: /\!\[(.+)\]\((.+) "(.+)"\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy">' } //图片
+        ];
+        replaceRules.forEach(rule => {
+          text = text.replace(rule.regex, rule.replacement);
+        });
+        //更新容器内容
+        container.innerHTML = text;
+      });
     });
+    document.querySelectorAll('.switch-link').forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault(); //阻止链接默认跳转
+        const targetClass = this.dataset.target; //获取目标区块类名（t1 或 t2）
+        //隐藏所有 .lyctxt 元素
+        document.querySelectorAll('.lyctxt').forEach(div => {
+          div.classList.remove('active');
+        });
+        //显示目标区块
+        document.querySelector(`.lyctxt.${targetClass}`).classList.add('active');
+      });
+    });
+    //打开侧边栏
+    function toggleSidebar() {
+      const sidebar = document.getElementById("mySidebar");
+      sidebar.classList.toggle("active");
+    }
+    // 点击外部区域关闭
+    document.addEventListener('click', function (event) {
+      const sidebar = document.getElementById("mySidebar");
+      const isClickInside = sidebar.contains(event.target); //点击位置是否在侧边栏内
+      const isButtonClick = event.target.closest('.open-btn'); //点击的是否为打开按钮
+      const isLinkClick = event.target.closest('.sidebar a'); //点击的是否为侧边栏内的链接
+      if (((!isClickInside && !isButtonClick) || isLinkClick) && sidebar.classList.contains("active")) {
+        sidebar.classList.remove("active");
+      }
+    });
+
+    function closeSidebar(event) {
+      event.stopPropagation(); //阻止事件冒泡
+      const sidebar = document.getElementById("mySidebar");
+      sidebar.classList.remove("active");
+    }
+
   </script>
 </body>
 
