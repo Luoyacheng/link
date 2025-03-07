@@ -4,11 +4,22 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>洛娅橙-阅读主页</title>
+  <meta name="referrer" content="no-referrer">
+  <!-- 绕过视频检测限制 -->
   <style>
     html {
       overflow-x: hidden;
       margin: 0;
       padding: 0;
+      -ms-overflow-style: none;
+      /* 关滚动条 */
+      scrollbar-width: none;
+      /* 关滚动条 */
+    }
+
+    html::-webkit-scrollbar {
+      display: none;
+      /* 隐藏滚动条 */
     }
 
     body {
@@ -19,17 +30,12 @@
       /* 水平居中 */
       align-items: center;
       /* 垂直居中 */
-      min-height: 80vh;
+      min-height: 90vh;
       width: 100vw;
-      background-color: white;
+      background-color: #e3f9ed;
       /* 默认浅色背景 */
       color: black;
       /* 默认文字颜色 */
-    }
-
-    body::-webkit-scrollbar {
-      display: none;
-      /* 隐藏滚动条 */
     }
 
     .toutu {
@@ -69,7 +75,7 @@
       position: fixed;
       top: 0;
       left: -200px;
-      background-color: #333;
+      background-color: #e3f9ed;
       padding-top: 40px;
       transition: 0.4s;
       z-index: 3;
@@ -77,10 +83,10 @@
 
     /* 侧边栏链接样式 */
     .sidebar a {
+      color: black;
       padding: 15px 25px;
       text-decoration: none;
       font-size: 18px;
-      color: white;
       display: block;
       transition: 0.2s;
     }
@@ -142,14 +148,23 @@
         background-color: #1a1a1a;
         color: white;
       }
+
+      .sidebar {
+        background-color: #1a1a1a;
+        color: white;
+      }
+
+      .sidebar a {
+        color: white;
+      }
     }
 
     .lyctxt {
       width: 100%;
-      white-space: pre-wrap;
-      /* 保留换行符 */
+      /* white-space: pre-line; */
+      /* 保留换行符 wrap含空格*/
       display: none;
-      /* 默认隐藏所有内容区块 */
+      /* 默认隐藏所有内容区块*/
     }
 
     .lyctxt.active {
@@ -183,8 +198,8 @@
     <button class="close-btn" onclick="closeSidebar(event)">╳</button>
     <a href="#" class="switch-link" data-target="t1">首页</a>
     <a href="https://pd.qq.com/s/4x9ejv73" target="_blank">八叉书库讲解</a>
-    <a href="#" class="switch-link" data-target="t2">pixiv讲解</a>
-    <a href="#">联系我</a>
+    <a href="#" class="switch-link" data-target="t2">pixiv小说讲解</a>
+    <a href="#" class="switch-link" data-target="t3">绅士漫画介绍</a>
   </div>
   <div class="sidebar-overlay" onclick="closeSidebar(event)"></div>
 
@@ -192,33 +207,51 @@
     #2 @洛娅橙：
     tab 欢迎来到洛娅橙个人主页--阅读。🎉
     tab 侧边栏里有一些书源的讲解教程。
-
+    ，。
     tab 18AV订阅源还在计划中。
     tab 如果书源和订阅源使用异常，请使用测试版。
-
+    ，。
     [下载阅读测试版APP](https://miaogongzi.lanzout.com/b01rgkhhe)
+    ，。
     [导入洛娅橙的订阅源](legado://import/rssSource?src=https://gitee.com/lyc486/yuedu2/raw/main/%E8%AE%A2%E9%98%85/%E6%B4%9B%E5%A8%85%E6%A9%99/lyc.json)
     <hr>
+    ，。
     友链
+    ，。
+    ，。
     [喵公子](https://yuedu.miaogongzi.net/)
+    ，。
     [源仓库](https://yckceo.vip/)
+    ，。
     [小寒发布页](https://qyyuapi.com/)
+    ，。
     [明月发布页](https://skybook.pages.dev/)
   </div>
   <div class="lyctxt t2">
     #2 PIXIV：
     tab 书源需要VPN和p站账号，请自行解决（[必应搜索](https://cn.bing.com/search?q=clash%20github)）。
+    ，。
     tab 获取账号token方法⬇️
-    <video width="240" height="320" controls>
+    <video width="360" height="760" controls preload="none"><!-- 控件和不预载 -->
       <source src="https://gitee.com/lyc486/yuedu/raw/master/pdl1.mp4" type="video/mp4">
       抱歉，你好像无法播放视频呢。
     </video>
-    
-       
-
-
-    [下载阅读测试版APP](https://miaogongzi.lanzout.com/b01rgkhhe)
-    [导入洛娅橙的订阅源](legado://import/rssSource?src=https://gitee.com/lyc486/yuedu2/raw/main/%E8%AE%A2%E9%98%85/%E6%B4%9B%E5%A8%85%E6%A9%99/lyc.json)
+    ，。，。
+    tab 登录和一些使用介绍⬇️
+    <video width="360" height="760" controls preload="none">
+      <source src="https://gitee.com/lyc486/yuedu/raw/master/pdl2.mp4" type="video/mp4">
+      设备不支持播放视频
+    </video>
+  </div>
+  <div class="lyctxt t3">
+    #2 绅士漫画：
+    tab 书源可能需要VPN，请自行解决（[必应搜索](https://cn.bing.com/search?q=clash%20github)）。
+    ，。
+    tab 一些使用介绍⬇️
+    <video width="360" height="760" controls preload="none">
+      <source src="https://gitee.com/lyc486/yuedu/raw/master/pdl3.mp4" type="video/mp4">
+      设备不支持播放视频
+    </video>
   </div>
 
 
@@ -232,10 +265,11 @@
         // 定义替换规则
         const replaceRules = [
           { regex: /\[(.+?)\]\((.+?)\)/g, replacement: '<a href="$2" target="_blank">$1</a>' }, //链接
-          { regex: /#(\d) (.+)/g, replacement: '<h$1 style="margin:0;line-height:1em;">$2</h$1>' }, //标题
+          { regex: /\s*#(\d) (.+)\s*/g, replacement: '<h$1 style="margin:0.5em;line-height:1em;">$2</h$1>' }, //标题
           { regex: /~~(.+?)~~/g, replacement: '<del>$1</del>' }, //删除
-          { regex: /.*tab (.*)/g, replacement: '<p style="margin:0;line-height:0.2em;">　　$1</p>' }, //缩进
-          { regex: /\!\[(.+)\]\((.+) "(.+)"\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy">' } //图片
+          { regex: /\s*tab (.*)\s*/g, replacement: '<p style="margin:0.2em;">　　$1</p>' }, //缩进
+          { regex: /\!\[(.+)\]\((.+) "(.+)"\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy">' }, //图片
+          { regex: /，。/g, replacement: '<br>' } //换行
         ];
         replaceRules.forEach(rule => {
           text = text.replace(rule.regex, rule.replacement);
