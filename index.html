@@ -30,6 +30,10 @@
       /* 关滚动条 */
       scrollbar-width: none;
       /* 关滚动条 */
+      background-color: #e3f9ed;
+      /* 默认浅色背景 */
+      color: black;
+      /* 默认文字颜色 */
     }
 
     html::-webkit-scrollbar {
@@ -47,10 +51,7 @@
       /* 垂直居中 */
       min-height: 90vh;
       width: 100vw;
-      background-color: #e3f9ed;
-      /* 默认浅色背景 */
-      color: black;
-      /* 默认文字颜色 */
+
     }
 
     .toutu {
@@ -159,7 +160,7 @@
 
     /* 检测深色模式 */
     @media (prefers-color-scheme: dark) {
-      body {
+      html {
         background-color: #1a1a1a;
         color: white;
       }
@@ -196,10 +197,6 @@
       color: #6610f2;
     }
 
-
-
-
-
     .lyctxt {
       opacity: 0;
       animation: fadeIn 1s ease-in forwards;
@@ -209,7 +206,7 @@
     @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(6em);
+        transform: translateY(3em);
       }
 
       to {
@@ -253,11 +250,10 @@
     tab 18AV订阅源还在计划中。
     tab 如果书源和订阅源使用异常，请使用测试版。
     ，。
-    [下载阅读测试版APP](https://miaogongzi.lanzout.com/b01rgkhhe)
-    ，。
     [导入洛娅橙的订阅源](legado://import/rssSource?src=https://gitee.com/lyc486/yuedu2/raw/main/%E8%AE%A2%E9%98%85/%E6%B4%9B%E5%A8%85%E6%A9%99/lyc.json)
-    <hr>
     ，。
+    [下载阅读测试版APP](https://miaogongzi.lanzout.com/b01rgkhhe)
+    <hr>
     友链
     ，。
     ，。
@@ -268,6 +264,7 @@
     [小寒发布页](https://qyyuapi.com/)
     ，。
     [明月发布页](https://skybook.pages.dev/)
+    ，。
   </div>
   <div class="lyctxt t2">
     #2 八叉：
@@ -276,6 +273,8 @@
     ，。
     ，。
     tab [QQ频道详讲](https://pd.qq.com/s/4x9ejv73)
+    ，。
+    ，。
   </div>
   <div class="lyctxt t3">
     #2 PIXIV：
@@ -292,7 +291,9 @@
       <source src="https://gitee.com/lyc486/yuedu/raw/master/pdl2.mp4" type="video/mp4">
       设备不支持播放视频
     </video>
+    ，。
   </div>
+
   <div class="lyctxt t4">
     #2 绅士漫画：
     tab 书源可能需要VPN，请自行解决（[必应搜索](https://cn.bing.com/search?q=clash%20github)）。
@@ -302,6 +303,7 @@
       <source src="https://gitee.com/lyc486/yuedu/raw/master/pdl3.mp4" type="video/mp4">
       设备不支持播放视频
     </video>
+    ，。
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -325,13 +327,6 @@
         container.innerHTML = text;
       });
     });
-    /*   document.querySelectorAll('.switch-link').forEach(link => {
-        link.addEventListener('click', function (e) {
-       //   e.preventDefault(); //阻止链接默认跳转
-          const targetClass = this.dataset.target; //获取目标区块类名（t1 或 t2）
-          qiehuan(targetClass);
-        });
-      }); */
     //切换侧边栏
     function qiehuan(x) {
       document.querySelectorAll('.lyctxt').forEach(div => {
