@@ -303,9 +303,6 @@
       设备不支持播放视频
     </video>
   </div>
-
-
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const containers = document.querySelectorAll('.lyctxt');
@@ -364,7 +361,7 @@
       const sidebar = document.getElementById("mySidebar");
       sidebar.classList.remove("active");
     }
-
+    window.addEventListener('DOMContentLoaded', checkHash);
     window.addEventListener('hashchange', checkHash);
     function checkHash() {
       let hash = window.location.hash;
