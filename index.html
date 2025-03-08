@@ -2,11 +2,13 @@
 <!DOCTYPE html>
 
 <head>
-  <meta name="keywords" content="洛娅橙,阅读,书源,luoyacheng">
+  <meta charset="utf-8">
+  <title lang="zh-CN">洛娅橙-阅读主页</title>
   <meta name="author" content="洛娅橙">
+  <meta name="description" content="洛娅橙个人阅读主页，书源、订阅源、净化规则、字典规则">
+  <meta name="keywords" content="洛娅橙,阅读,书源,luoyacheng">
   <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>洛娅橙-阅读主页</title>
   <link rel="icon" href="https://gitee.com/lyc486/yuedu/raw/master/favicon.svg">
   <script>
     (function () {
@@ -193,10 +195,41 @@
     .lyctxt a:active {
       color: #6610f2;
     }
+
+
+
+
+
+    .lyctxt {
+      opacity: 0;
+      animation: fadeIn 1s ease-in forwards;
+      will-change: opacity, transform;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6em);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 动画禁用时的备用样式 */
+    @supports not (animation-name: fadeIn) {
+
+      .lyctxt {
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 
 <body>
+  <h1 hidden>洛娅橙</h1>
   <div class="toutu">
     <img
       src="https://cdn.cdnjson.com/pic.html?url=https://gd-hbimg.huaban.com/d2e4dd6928850ce74c0a0318692a4fc238c7dfbf34025-1Z8m0l_fw1200webp"
@@ -205,10 +238,10 @@
   </div>
   <div class="sidebar" id="mySidebar">
     <button class="close-btn" onclick="closeSidebar(event)">╳</button>
-    <a href="#" class="switch-link" data-target="t1">首页</a>
-    <a href="https://pd.qq.com/s/4x9ejv73" target="_blank">八叉书库讲解</a>
-    <a href="#" class="switch-link" data-target="t2">pixiv小说讲解</a>
-    <a href="#" class="switch-link" data-target="t3">绅士漫画介绍</a>
+    <a href="#首页" class="switch-link" data-target="t1">首页</a>
+    <a href="#八叉" class="switch-link" data-target="t2">八叉书库讲解</a>
+    <a href="#P站" class="switch-link" data-target="t3">pixiv小说讲解</a>
+    <a href="#绅士" class="switch-link" data-target="t4">绅士漫画介绍</a>
   </div>
   <div class="sidebar-overlay" onclick="closeSidebar(event)"></div>
 
@@ -237,6 +270,14 @@
     [明月发布页](https://skybook.pages.dev/)
   </div>
   <div class="lyctxt t2">
+    #2 八叉：
+    tab 登录界面启用封面净化的效果⬇️
+    ![加载失败](https://img.picui.cn/free/2025/03/08/67cc59ab93eb0.jpg "封面净化" 60%)
+    ，。
+    ，。
+    tab [QQ频道详讲](https://pd.qq.com/s/4x9ejv73)
+  </div>
+  <div class="lyctxt t3">
     #2 PIXIV：
     tab 书源需要VPN和p站账号，请自行解决（[必应搜索](https://cn.bing.com/search?q=clash%20github)）。
     ，。
@@ -252,7 +293,7 @@
       设备不支持播放视频
     </video>
   </div>
-  <div class="lyctxt t3">
+  <div class="lyctxt t4">
     #2 绅士漫画：
     tab 书源可能需要VPN，请自行解决（[必应搜索](https://cn.bing.com/search?q=clash%20github)）。
     ，。
@@ -273,11 +314,11 @@
         let text = container.innerHTML;
         // 定义替换规则
         const replaceRules = [
+          { regex: /\!\[(.+)\]\((.+) "(.+)" (.+)\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy" width="$4">' }, //图片
           { regex: /\[(.+?)\]\((.+?)\)/g, replacement: '<a href="$2" target="_blank">$1</a>' }, //链接
           { regex: /\s*#(\d) (.+)\s*/g, replacement: '<h$1 style="margin:0.5em;line-height:1em;">$2</h$1>' }, //标题
           { regex: /~~(.+?)~~/g, replacement: '<del>$1</del>' }, //删除
           { regex: /\s*tab (.*)\s*/g, replacement: '<p style="margin:0.2em;">　　$1</p>' }, //缩进
-          { regex: /\!\[(.+)\]\((.+) "(.+)"\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy">' }, //图片
           { regex: /，。/g, replacement: '<br>' } //换行
         ];
         replaceRules.forEach(rule => {
@@ -287,18 +328,21 @@
         container.innerHTML = text;
       });
     });
-    document.querySelectorAll('.switch-link').forEach(link => {
-      link.addEventListener('click', function (e) {
-        e.preventDefault(); //阻止链接默认跳转
-        const targetClass = this.dataset.target; //获取目标区块类名（t1 或 t2）
-        //隐藏所有 .lyctxt 元素
-        document.querySelectorAll('.lyctxt').forEach(div => {
-          div.classList.remove('active');
+    /*   document.querySelectorAll('.switch-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+       //   e.preventDefault(); //阻止链接默认跳转
+          const targetClass = this.dataset.target; //获取目标区块类名（t1 或 t2）
+          qiehuan(targetClass);
         });
-        //显示目标区块
-        document.querySelector(`.lyctxt.${targetClass}`).classList.add('active');
+      }); */
+    //切换侧边栏
+    function qiehuan(x) {
+      document.querySelectorAll('.lyctxt').forEach(div => {
+        div.classList.remove('active');
       });
-    });
+      //显示目标区块
+      document.querySelector(`.lyctxt.${x}`).classList.add('active');
+    }
     //打开侧边栏
     function toggleSidebar() {
       const sidebar = document.getElementById("mySidebar");
@@ -319,6 +363,19 @@
       event.stopPropagation(); //阻止事件冒泡
       const sidebar = document.getElementById("mySidebar");
       sidebar.classList.remove("active");
+    }
+
+    window.addEventListener('hashchange', checkHash);
+    function checkHash() {
+      let hash = window.location.hash;
+      hash = decodeURIComponent(hash);
+      switch (hash) {
+        case '#八叉': qiehuan("t2"); break;
+        case '#P站': qiehuan("t3"); break;
+        case '#绅士': qiehuan("t4"); break;
+        default: qiehuan("t1"); break;
+      }
+      window.scrollTo(0, 0); //从头浏览
     }
 
   </script>
