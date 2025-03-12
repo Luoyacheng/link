@@ -1,11 +1,11 @@
-<html>
 <!DOCTYPE html>
+<html lang="zh-CN">
 
 <head>
   <meta charset="utf-8">
-  <title lang="zh-CN">洛娅橙-阅读主页</title>
+  <title>洛娅橙-阅读主页</title>
   <meta name="author" content="洛娅橙">
-  <meta name="description" content="洛娅橙个人阅读主页，书源、订阅源、净化规则、字典规则">
+  <meta name="description" content="洛娅橙个人阅读主页，书源、订阅源、净化规则、字典规则等">
   <meta name="keywords" content="洛娅橙,阅读,书源,luoyacheng">
   <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,6 +52,10 @@
       min-height: 90vh;
       width: 100vw;
 
+    }
+
+    .hidden {
+      display: none;
     }
 
     .toutu {
@@ -142,7 +146,6 @@
       background: rgba(251, 251, 251, 0.3);
       border: none;
       border-radius: 50%;
-      color: white;
       font-size: 12px;
       cursor: pointer;
       display: flex;
@@ -170,7 +173,7 @@
         color: white;
       }
 
-      .sidebar a {
+      .sidebar :is(a, button) {
         color: white;
       }
     }
@@ -181,6 +184,10 @@
       /* 保留换行符 wrap含空格*/
       display: none;
       /* 默认隐藏所有内容区块*/
+      /* 下面是动画 */
+      opacity: 0;
+      animation: fadeIn 0.6s ease-in forwards;
+      will-change: opacity, transform;
     }
 
     .lyctxt.active {
@@ -197,11 +204,42 @@
       color: #6610f2;
     }
 
-    .lyctxt {
-      opacity: 0;
-      animation: fadeIn 1s ease-in forwards;
-      will-change: opacity, transform;
+    .lyctxt>.bar {
+      width: 300px;
+      height: 40px;
+      border: 2px solid #4CAF50;
+      border-radius: 8px;
+      /* 圆角 */
+      background: #ff9900;
+      color: #f1f2f3;
+      text-align: center;
+      line-height: 40px;
+      /* 垂直居中文字 */
+      box-shadow: 0 2px 5px rgba(62, 67, 119, 0.2);
+      margin: 10px auto;
+      /* 外间距 */
+      padding: 5px;
+      /* 内间距 */
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 1.94);
+      /* 弹性曲线 */
     }
+
+    .lyctxt>.bar>button {
+      color: #fd367e;
+    }
+
+    /* 悬停时放大 10%，提升阴影高度*/
+    .lyctxt>.bar:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(62, 67, 119, 0.3);
+      transform: scale(1.1);
+    }
+
+
+
+
+
+
 
     @keyframes fadeIn {
       from {
@@ -226,7 +264,7 @@
 </head>
 
 <body>
-  <h1 hidden>洛娅橙</h1>
+  <h1 id="h1f">欢迎🎉，这里有一些阅读相关的东西。</h1>
   <div class="toutu">
     <img
       src="https://cdn.cdnjson.com/pic.html?url=https://gd-hbimg.huaban.com/d2e4dd6928850ce74c0a0318692a4fc238c7dfbf34025-1Z8m0l_fw1200webp"
@@ -235,16 +273,17 @@
   </div>
   <div class="sidebar" id="mySidebar">
     <button class="close-btn" onclick="closeSidebar(event)">╳</button>
-    <a href="#首页" class="switch-link" data-target="t1">首页</a>
+    <a href="" class="switch-link" data-target="t1">首页</a>
     <a href="#八叉" class="switch-link" data-target="t2">八叉书库讲解</a>
     <a href="#P站" class="switch-link" data-target="t3">pixiv小说讲解</a>
     <a href="#绅士" class="switch-link" data-target="t4">绅士漫画介绍</a>
+    <a href="#其它" class="switch-link" data-target="t99">其它</a>
   </div>
   <div class="sidebar-overlay" onclick="closeSidebar(event)"></div>
 
-  <div class="lyctxt t1 active">
+  <div class="lyctxt t1">
     #2 @洛娅橙：
-    tab 欢迎来到洛娅橙个人主页--阅读。🎉
+    tab 欢迎来到洛娅橙个人主页--阅读。
     tab 侧边栏里有一些书源的讲解教程。
     ，。
     tab 18AV订阅源还在计划中。
@@ -266,6 +305,7 @@
     [明月发布页](https://skybook.pages.dev/)
     ，。
   </div>
+
   <div class="lyctxt t2">
     #2 八叉：
     tab 登录界面启用封面净化的效果⬇️
@@ -276,9 +316,11 @@
     ，。
     ，。
   </div>
+
   <div class="lyctxt t3">
     #2 PIXIV：
     tab 书源需要VPN和p站账号，请自行解决（[必应搜索](https://cn.bing.com/search?q=clash%20github)）。
+    tab 虽然现在书源已经支持直连。但获取token这一步仍然需要VPN，注意不要将自己的token泄露给其他人。
     ，。
     tab 获取账号token方法⬇️
     <video width="360" height="760" controls preload="none"><!-- 控件和不预载 -->
@@ -305,7 +347,14 @@
     </video>
     ，。
   </div>
+
+  <div class="lyctxt t99">
+    <div class="bar">封面规则，建设中</div>
+
+  </div>
   <script>
+    const h1f = document.getElementById("h1f");
+    h1f.classList.add("hidden");
     document.addEventListener('DOMContentLoaded', () => {
       const containers = document.querySelectorAll('.lyctxt');
       // 遍历每个容器
@@ -315,7 +364,7 @@
         const replaceRules = [
           { regex: /\!\[(.+)\]\((.+) "(.+)" (.+)\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy" width="$4">' }, //图片
           { regex: /\[(.+?)\]\((.+?)\)/g, replacement: '<a href="$2" target="_blank">$1</a>' }, //链接
-          { regex: /\s*#(\d) (.+)\s*/g, replacement: '<h$1 style="margin:0.5em;line-height:1em;">$2</h$1>' }, //标题
+          { regex: /\s+#(\d) (.+)\s*/g, replacement: '<h$1 style="margin:0.5em;line-height:1em;">$2</h$1>' }, //标题
           { regex: /~~(.+?)~~/g, replacement: '<del>$1</del>' }, //删除
           { regex: /\s*tab (.*)\s*/g, replacement: '<p style="margin:0.2em;">　　$1</p>' }, //缩进
           { regex: /，。/g, replacement: '<br>' } //换行
@@ -365,6 +414,7 @@
         case '#八叉': qiehuan("t2"); break;
         case '#P站': qiehuan("t3"); break;
         case '#绅士': qiehuan("t4"); break;
+        case '#其它': qiehuan("t99"); break;
         default: qiehuan("t1"); break;
       }
       window.scrollTo(0, 0); //从头浏览
