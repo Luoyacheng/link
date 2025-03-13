@@ -30,7 +30,7 @@
       /* 关滚动条 */
       scrollbar-width: none;
       /* 关滚动条 */
-      background-color: #e3f9ed;
+      background-color: #fffbf0;
       /* 默认浅色背景 */
       color: black;
       /* 默认文字颜色 */
@@ -41,17 +41,21 @@
       /* 隐藏滚动条 */
     }
 
+    :root {
+      --transition-effect: 0.4s cubic-bezier(0.25, 0.46, 0.45, 1.94);
+      /* 动画弹性曲线 */
+    }
+
     body {
       margin: 0;
       display: flex;
       flex-direction: column;
       /* justify-content: center; */
-      /* 水平居中 */
-      align-items: center;
       /* 垂直居中 */
+      align-items: center;
+      /*水平居中 */
       min-height: 90vh;
       width: 100vw;
-
     }
 
     .hidden {
@@ -61,14 +65,18 @@
     .toutu {
       position: relative;
       width: 100vw;
+      max-width: 1000px;
+      /* 最大宽度值 */
+      margin: 0 auto;
+      /* 可去，保证居中 */
       overflow-x: hidden;
       /* 防止溢出产生横向滚动条 */
     }
 
     .toutu img {
       width: 100%;
-      max-width: 900px;
-      /* 最大宽度值 */
+      border-radius: 10px;
+      /* 图片圆角 */
     }
 
     .open-btn {
@@ -79,26 +87,31 @@
       padding: 4px 6px;
       border: none;
       position: fixed;
-      left: 10px;
+      left: max(10px, calc((100vw - 1000px)/2 + 10px));
+      /* 动态left，注意加减号前后的空格 */
       top: 10px;
       z-index: 2;
       border-radius: 5px;
       outline: none;
       -webkit-tap-highlight-color: transparent;
+      /* 关闭触摸点击效果 */
       user-select: none;
     }
 
     /* 侧边栏样式 */
     .sidebar {
       height: 100%;
-      width: 200px;
+      width: 300px;
       position: fixed;
       top: 0;
-      left: -200px;
-      background-color: #e3f9ed;
+      /*  left: calc(-1*(max(200px, 20%))); */
+      left: calc(max(0px, calc((100vw - 1000px)/2)) - 300px);
+      background-color: #fffbf0;
       padding-top: 40px;
       transition: 0.4s;
       z-index: 3;
+      visibility: hidden;
+      opacity: 0;
     }
 
     /* 侧边栏链接样式 */
@@ -112,12 +125,16 @@
     }
 
     .sidebar a:hover {
-      background-color: #555;
+      background-color: rgba(0, 0, 0, 0.3);
     }
 
     /* 侧边栏激活状态 */
     .sidebar.active {
-      left: 0;
+      left: calc(max(0px, calc((100vw - 1000px)/2)));
+      border-radius: 10px 0 0 0;
+      /* 和图片一样圆角 */
+      opacity: 1;
+      visibility: visible;
     }
 
     /* 遮罩，关闭侧边栏 */
@@ -134,6 +151,7 @@
 
     .sidebar.active+.sidebar-overlay {
       display: block;
+      /* 属性设为块级 */
     }
 
     /* 新增关闭按钮样式 */
@@ -180,6 +198,7 @@
 
     .lyctxt {
       width: 100%;
+      max-width: 1000px;
       /* white-space: pre-line; */
       /* 保留换行符 wrap含空格*/
       display: none;
@@ -205,41 +224,46 @@
     }
 
     .lyctxt>.bar {
-      width: 300px;
-      height: 40px;
+      width: 17em;
+      height: 3em;
       border: 2px solid #4CAF50;
       border-radius: 8px;
       /* 圆角 */
-      background: #ff9900;
+      background: #d66b00;
       color: #f1f2f3;
       text-align: center;
-      line-height: 40px;
+      line-height: 3em;
       /* 垂直居中文字 */
-      box-shadow: 0 2px 5px rgba(62, 67, 119, 0.2);
-      margin: 10px auto;
+      box-shadow: 0 2px 5px rgba(255, 153, 0, 0.3);
+      margin: 1em auto;
       /* 外间距 */
       padding: 5px;
       /* 内间距 */
-      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 1.94);
+      transition: transform var(--transition-effect);
       /* 弹性曲线 */
     }
 
     .lyctxt>.bar>button {
-      color: #fd367e;
+      background: #4CAF50;
+      color: #f1f2f3;
+      border: 1px solid #fd367e;
+      box-shadow: 0 4px 8px 4px rgba(253, 54, 126, 0.8);
+      border-radius: 8px;
+      padding: 0.5em 1em;
+      transition: transform var(--transition-effect);
     }
 
     /* 悬停时放大 10%，提升阴影高度*/
     .lyctxt>.bar:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 15px rgba(62, 67, 119, 0.3);
+      box-shadow: 0 8px 15px rgba(255, 153, 0, 0.6);
       transform: scale(1.1);
     }
 
-
-
-
-
-
+    .lyctxt>.bar>button:hover {
+      box-shadow: 0 2px 6px 2px rgba(253, 54, 126, 0.6);
+      transform: scale(0.8);
+    }
 
     @keyframes fadeIn {
       from {
@@ -255,7 +279,6 @@
 
     /* 动画禁用时的备用样式 */
     @supports not (animation-name: fadeIn) {
-
       .lyctxt {
         opacity: 1;
       }
@@ -271,6 +294,7 @@
       alt="图片加载失败，不重要啦">
     <button class="open-btn" onclick="toggleSidebar()">☰</button>
   </div>
+
   <div class="sidebar" id="mySidebar">
     <button class="close-btn" onclick="closeSidebar(event)">╳</button>
     <a href="" class="switch-link" data-target="t1">首页</a>
@@ -280,7 +304,8 @@
     <a href="#其它" class="switch-link" data-target="t99">其它</a>
   </div>
   <div class="sidebar-overlay" onclick="closeSidebar(event)"></div>
-
+  <!-- [导入洛娅橙的订阅源](legado://import/rssSource?src=https://gitee.com/lyc486/yuedu2/raw/main/%E8%AE%A2%E9%98%85/%E6%B4%9B%E5%A8%85%E6%A9%99/lyc.json) -->
+  <!-- [下载阅读测试版APP](https://miaogongzi.lanzout.com/b01rgkhhe) -->
   <div class="lyctxt t1">
     #2 @洛娅橙：
     tab 欢迎来到洛娅橙个人主页--阅读。
@@ -288,10 +313,14 @@
     ，。
     tab 18AV订阅源还在计划中。
     tab 如果书源和订阅源使用异常，请使用测试版。
+    tab 个人阅读资源请导入下方订阅源。
     ，。
-    [导入洛娅橙的订阅源](legado://import/rssSource?src=https://gitee.com/lyc486/yuedu2/raw/main/%E8%AE%A2%E9%98%85/%E6%B4%9B%E5%A8%85%E6%A9%99/lyc.json)
+    <div class="bar">洛娅橙的订阅源　　　<button
+        onclick="window.open('legado://import/rssSource?src=https://gitee.com/lyc486/yuedu2/raw/main/%E8%AE%A2%E9%98%85/%E6%B4%9B%E5%A8%85%E6%A9%99/lyc.json','_blank')">导入</button>
+    </div>
+    <div class="bar">阅读测试版APP　　　<button
+        onclick="window.open('https://miaogongzi.lanzout.com/b01rgkhhe','_blank')">下载</button></div>
     ，。
-    [下载阅读测试版APP](https://miaogongzi.lanzout.com/b01rgkhhe)
     <hr>
     友链
     ，。
@@ -327,7 +356,10 @@
       <source src="https://gitee.com/lyc486/yuedu/raw/master/pdl1.mp4" type="video/mp4">
       抱歉，你好像无法播放视频呢。
     </video>
-    ，。，。
+    ，。
+    tab 如果你获取token时，网页加载错误，请参照下图，清除webview数据后重试⬇️
+    ![加载失败](https://img.picui.cn/free/2025/03/14/67d31b0166fb0.jpg "清除web" 80%)
+    ，。
     tab 登录和一些使用介绍⬇️
     <video width="360" height="760" controls preload="none">
       <source src="https://gitee.com/lyc486/yuedu/raw/master/pdl2.mp4" type="video/mp4">
