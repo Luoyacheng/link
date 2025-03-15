@@ -28,7 +28,7 @@
       padding: 0;
       -ms-overflow-style: none;
       /* 关滚动条 */
-      scrollbar-width: none;
+      /* scrollbar-width: none; */
       /* 关滚动条 */
       background-color: #fffbf0;
       /* 默认浅色背景 */
@@ -80,9 +80,9 @@
     }
 
     .open-btn {
-      font-size: 16px;
+      font-size: 20px;
       cursor: pointer;
-      background-color: rgba(51, 51, 51, 0.9);
+      background-color: rgba(51, 51, 51, 0.8);
       color: white;
       padding: 4px 6px;
       border: none;
@@ -95,17 +95,18 @@
       outline: none;
       -webkit-tap-highlight-color: transparent;
       /* 关闭触摸点击效果 */
+      -webkit-user-select: none;
       user-select: none;
     }
 
     /* 侧边栏样式 */
     .sidebar {
       height: 100%;
-      width: 300px;
+      width: max(200px, 18%);
       position: fixed;
       top: 0;
       /*  left: calc(-1*(max(200px, 20%))); */
-      left: calc(max(0px, calc((100vw - 1000px)/2)) - 300px);
+      left: calc(max(0px, calc((100vw - 1000px)/2)) - max(200px, 18%));
       background-color: #fffbf0;
       padding-top: 40px;
       transition: 0.4s;
@@ -131,7 +132,7 @@
     /* 侧边栏激活状态 */
     .sidebar.active {
       left: calc(max(0px, calc((100vw - 1000px)/2)));
-      border-radius: 10px 0 0 0;
+      /* border-radius: 10px 0 0 0; */
       /* 和图片一样圆角 */
       opacity: 1;
       visibility: visible;
@@ -204,9 +205,27 @@
       display: none;
       /* 默认隐藏所有内容区块*/
       /* 下面是动画 */
-      opacity: 0;
       animation: fadeIn 0.6s ease-in forwards;
       will-change: opacity, transform;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(3em);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 动画禁用时的备用样式 */
+    @supports not (animation-name: fadeIn) {
+      .lyctxt {
+        opacity: 1;
+      }
     }
 
     .lyctxt.active {
@@ -231,13 +250,14 @@
       /* 圆角 */
       background: #d66b00;
       color: #f1f2f3;
-      text-align: center;
+      /* text-align: center; */
+      text-align: right;
       line-height: 3em;
       /* 垂直居中文字 */
       box-shadow: 0 2px 5px rgba(255, 153, 0, 0.3);
       margin: 1em auto;
       /* 外间距 */
-      padding: 5px;
+      padding: 5px 10px;
       /* 内间距 */
       transition: transform var(--transition-effect);
       /* 弹性曲线 */
@@ -251,10 +271,12 @@
       border-radius: 8px;
       padding: 0.5em 1em;
       transition: transform var(--transition-effect);
+      -webkit-user-select: none;
+      user-select: none;
     }
 
     /* 悬停时放大 10%，提升阴影高度*/
-    .lyctxt>.bar:hover {
+    .lyctxt>.bar.active {
       transform: translateY(-3px);
       box-shadow: 0 6px 10px rgba(255, 153, 0, 0.5);
       transform: scale(1.1);
@@ -264,87 +286,8 @@
       box-shadow: 0 2px 6px 2px rgba(253, 54, 126, 0.4);
       transform: scale(0.8);
     }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(3em);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* 动画禁用时的备用样式 */
-    @supports not (animation-name: fadeIn) {
-      .lyctxt {
-        opacity: 1;
-      }
-    }
   </style>
-      <script>
-          (function() {
-              // 兼容移动端和桌面端的处理函数
-              function setupHover(element) {
-                  let isTouch = false;
-                  
-                  // 触摸处理
-                  element.addEventListener('touchstart', function(e) {
-                      isTouch = true;
-                      activateElement(this);
-                      e.preventDefault(); // 阻止默认行为
-                  }, { passive: false });
-  
-                  element.addEventListener('touchend', function() {
-                      isTouch = false;
-                      setTimeout(() => deactivateElement(this), 100);
-                  });
-  
-                  // 鼠标处理
-                  element.addEventListener('mouseenter', function() {
-                      if (!isTouch) activateElement(this);
-                  });
-  
-                  element.addEventListener('mouseleave', function() {
-                      if (!isTouch) deactivateElement(this);
-                  });
-              }
-  
-              // 激活元素
-              function activateElement(el) {
-                  document.querySelectorAll('.bar').forEach(box => {
-                      if (box !== el) box.classList.remove('active');
-                  });
-                  el.classList.add('active');
-              }
-  
-              // 关闭激活状态
-              function deactivateElement(el) {
-                  el.classList.remove('active');
-              }
-  
-              // 全局触摸监听
-              document.addEventListener('touchstart', function(e) {
-                  if (!e.target.closest('.bar')) {
-                      document.querySelectorAll('.box').forEach(box => {
-                          box.classList.remove('active');
-                      });
-                  }
-              });
-  
-              // 滚动时关闭所有状态
-              window.addEventListener('scroll', function() {
-                  document.querySelectorAll('.bar').forEach(box => {
-                      box.classList.remove('active');
-                  });
-              }, { passive: true });
-  
-              // 初始化所有元素
-              document.querySelectorAll('.bar').forEach(setupHover);
-          })();
-      </script>
+
 </head>
 
 <body>
@@ -372,15 +315,17 @@
     tab 欢迎来到洛娅橙个人主页--阅读。
     tab 侧边栏里有一些书源的讲解教程。
     ，。
-    tab 18AV订阅源还在计划中。
     tab 如果书源和订阅源使用异常，请使用测试版。
     tab 个人阅读资源请导入下方订阅源。
+    tab 也欢迎加入个人TG群组进行交流。
     ，。
     <div class="bar">洛娅橙的订阅源　　　<button
         onclick="window.open('legado://import/rssSource?src=https://gitee.com/lyc486/yuedu2/raw/main/%E8%AE%A2%E9%98%85/%E6%B4%9B%E5%A8%85%E6%A9%99/lyc.json','_blank')">导入</button>
     </div>
     <div class="bar">阅读测试版APP　　　<button
         onclick="window.open('https://miaogongzi.lanzout.com/b01rgkhhe','_blank')">下载</button></div>
+    <div class="bar">洛娅橙TG交流群　　　<button onclick="window.open('https://t.me/+ehUFQ0bVO59hNDI1','_blank')">加入</button>
+    </div>
     ，。
     <hr>
     友链
@@ -393,7 +338,8 @@
     [小寒发布页](https://qyyuapi.com/)
     ，。
     [明月发布页](https://skybook.pages.dev/)
-    ，。，。
+    ，。
+    ，。
   </div>
 
   <div class="lyctxt t2">
@@ -401,6 +347,10 @@
     tab 登录界面启用封面净化的效果⬇️
     ![加载失败](https://img.picui.cn/free/2025/03/08/67cc59ab93eb0.jpg "封面净化" 60%)
     ，。
+    tab 搜索关键词输入示意：“我的”、“书名：系统”、“作者：棺材”、“标签：母女”。
+    tab 正则书名黑名单填写示例：/母亲|第\d+部/
+    tab 正则书名白名单填写示例：/岳母|御姐/
+    tab 如此填写后，名字为《你的母亲》的书不进行显示。名字为《你的母亲和我的岳母》的书仍然显示。
     ，。
     tab [QQ频道详讲](https://pd.qq.com/s/4x9ejv73)
     ，。
@@ -418,14 +368,17 @@
       抱歉，你好像无法播放视频呢。
     </video>
     ，。
-    tab 如果你获取token时，网页加载错误，请参照下图，清除webview数据后重试⬇️
-    ![加载失败](https://img.picui.cn/free/2025/03/14/67d31b0166fb0.jpg "清除web" 80%)
+    tab 如果你获取token时，网页加载错误或者网页登录时自动再次跳转到账号为空的登录界面，请参照下图，清除webview数据后重试⬇️
+    ![加载失败](https://img.picui.cn/free/2025/03/14/67d31b0166fb0.jpg "清除web" 90%)
     ，。
     tab 登录和一些使用介绍⬇️
     <video width="360" height="760" controls preload="none">
       <source src="https://gitee.com/lyc486/yuedu/raw/master/pdl2.mp4" type="video/mp4">
       设备不支持播放视频
     </video>
+    ，。
+    tab 补充的小技巧：将阅读的搜索设为单本书源搜索。然后在详情页点击作者，会展示该作者的所有作品。
+    ，。
     ，。
   </div>
 
@@ -438,37 +391,37 @@
       <source src="https://gitee.com/lyc486/yuedu/raw/master/pdl3.mp4" type="video/mp4">
       设备不支持播放视频
     </video>
+    tab 在登录界面的填写发现起始页数（默认为1，可不填）能实现发现跳页。
+    ，。
     ，。
   </div>
 
   <div class="lyctxt t99">
-    <div class="bar">封面规则，建设中</div>
+    <div class="bar">封面规则，建设中　　　<button onclick="window.open('https://t.me/+ehUFQ0bVO59hNDI1','_blank')">跳转</button>
+    </div>
 
   </div>
   <script>
+    //type="text/plain"
     const h1f = document.getElementById("h1f");
     h1f.classList.add("hidden");
-    document.addEventListener('DOMContentLoaded', () => {
-      const containers = document.querySelectorAll('.lyctxt');
-      // 遍历每个容器
-      containers.forEach(container => {
-        let text = container.innerHTML;
-        // 定义替换规则
-        const replaceRules = [
-          { regex: /\!\[(.+)\]\((.+) "(.+)" (.+)\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy" width="$4">' }, //图片
-          { regex: /\[(.+?)\]\((.+?)\)/g, replacement: '<a href="$2" target="_blank">$1</a>' }, //链接
-          { regex: /\s+#(\d) (.+)\s*/g, replacement: '<h$1 style="margin:0.5em;line-height:1em;">$2</h$1>' }, //标题
-          { regex: /~~(.+?)~~/g, replacement: '<del>$1</del>' }, //删除
-          { regex: /\s*tab (.*)\s*/g, replacement: '<p style="margin:0.2em;">　　$1</p>' }, //缩进
-          { regex: /，。/g, replacement: '<br>' } //换行
-        ];
-        replaceRules.forEach(rule => {
-          text = text.replace(rule.regex, rule.replacement);
-        });
-        //更新容器内容
-        container.innerHTML = text;
-      });
-    });
+    /* 切换界面 */
+    window.addEventListener('DOMContentLoaded', checkHash);
+    window.addEventListener('hashchange', checkHash);
+    function checkHash() {
+      let hash = window.location.hash;
+      hash = decodeURIComponent(hash);
+      switch (hash) {
+        case '#八叉': qiehuan("t2"); break;
+        case '#P站': qiehuan("t3"); break;
+        case '#绅士': qiehuan("t4"); break;
+        case '#其它': qiehuan("t99"); break;
+        default: qiehuan("t1"); break;
+      }
+      marktxt();//mark文本
+      window.scrollTo(0, 0); //从头浏览
+    }
+
     //切换侧边栏
     function qiehuan(x) {
       document.querySelectorAll('.lyctxt').forEach(div => {
@@ -477,6 +430,75 @@
       //显示目标区块
       document.querySelector(`.lyctxt.${x}`).classList.add('active');
     }
+
+    // 移动端和桌面端的点击和触摸处理函数
+    function setupHover(element) {
+      let isTouch = false;
+      // 触摸处理
+      element.addEventListener('touchstart', function (e) {
+        isTouch = true;
+        activateElement(this);
+        e.preventDefault(); // 阻止默认行为
+      }, { passive: false });
+      element.addEventListener('touchend', function () {
+        isTouch = false;
+        setTimeout(() => deactivateElement(this), 100);
+      });
+      // 鼠标处理
+      element.addEventListener('mouseenter', function () {
+        if (!isTouch) activateElement(this);
+      });
+      element.addEventListener('mouseleave', function () {
+        if (!isTouch) deactivateElement(this);
+      });
+    }
+    // 激活bar元素
+    function activateElement(el) {
+      document.querySelectorAll('.bar').forEach(box => {
+        if (box !== el) box.classList.remove('active');
+      });
+      el.classList.add('active');
+    }
+    // 关闭bar激活状态
+    function deactivateElement(el) {
+      el.classList.remove('active');
+    }
+    // 全局触摸监听，清除bar状态
+    document.addEventListener('touchstart', function (e) {
+      if (!e.target.closest('.bar')) {
+        document.querySelectorAll('.bar').forEach(box => {
+          box.classList.remove('active');
+        });
+      }
+    });
+    // 滚动时关闭所有状态
+    window.addEventListener('scroll', function () {
+      document.querySelectorAll('.bar').forEach(box => {
+        box.classList.remove('active');
+      });
+    }, { passive: true });
+
+    function marktxt() {
+      let container = document.querySelector('.lyctxt.active');
+      let text = container.innerHTML;
+      // 定义替换规则
+      const replaceRules = [
+        { regex: /\!\[(.+)\]\((.+) "(.+)" (.+)\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy" width="$4">' }, //图片
+        { regex: /\[(.+?)\]\((.+?)\)/g, replacement: '<a href="$2" target="_blank">$1</a>' }, //链接
+        { regex: /\s+#(\d) (.+)\s*/g, replacement: '<h$1 style="margin:0.5em;line-height:1em;">$2</h$1>' }, //标题
+        { regex: /~~(.+?)~~/g, replacement: '<del>$1</del>' }, //删除
+        { regex: /\s*tab (.*)\s*/g, replacement: '<p style="margin:0.2em;">　　$1</p>' }, //缩进
+        { regex: /，。/g, replacement: '<br>' } //换行
+      ];
+      replaceRules.forEach(rule => {
+        text = text.replace(rule.regex, rule.replacement);
+      });
+      //更新容器内容
+      container.innerHTML = text;
+      // 初始化bar动画
+      container.querySelectorAll('.bar').forEach(setupHover);
+    }
+
     //打开侧边栏
     function toggleSidebar() {
       const sidebar = document.getElementById("mySidebar");
@@ -497,20 +519,6 @@
       event.stopPropagation(); //阻止事件冒泡
       const sidebar = document.getElementById("mySidebar");
       sidebar.classList.remove("active");
-    }
-    window.addEventListener('DOMContentLoaded', checkHash);
-    window.addEventListener('hashchange', checkHash);
-    function checkHash() {
-      let hash = window.location.hash;
-      hash = decodeURIComponent(hash);
-      switch (hash) {
-        case '#八叉': qiehuan("t2"); break;
-        case '#P站': qiehuan("t3"); break;
-        case '#绅士': qiehuan("t4"); break;
-        case '#其它': qiehuan("t99"); break;
-        default: qiehuan("t1"); break;
-      }
-      window.scrollTo(0, 0); //从头浏览
     }
 
   </script>
