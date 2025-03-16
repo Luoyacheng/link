@@ -9,6 +9,7 @@
   <meta name="keywords" content="洛娅橙,阅读,书源,luoyacheng">
   <meta name="Robots" content="All">
   <meta name="luoyacheng" content="lyc123">
+  <meta name="luoyacheng2" content="lyc12">
   <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="https://gitee.com/lyc486/yuedu/raw/master/favicon.svg">
@@ -59,6 +60,7 @@
       /*水平居中 */
       min-height: 90vh;
       width: 100vw;
+      /* font-family: 微软雅黑体; */
     }
 
     .hidden {
@@ -118,7 +120,7 @@
       left: calc(max(0px, calc((100vw - 1000px)/2)) - max(200px, 18%));
       background-color: #fffbf0;
       padding-top: 40px;
-      transition: 0.4s;
+      transition: 0.4s ease;
       z-index: 3;
       visibility: hidden;
       opacity: 0;
@@ -156,12 +158,15 @@
       height: 100%;
       background: rgba(0, 0, 0, 0.5);
       z-index: 1;
-      display: none;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.4s ease, visibility 0s 0.4s;
     }
 
     .sidebar.active+.sidebar-overlay {
-      display: block;
-      /* 属性设为块级 */
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.4s ease;
     }
 
     /* 新增关闭按钮样式 */
@@ -264,12 +269,13 @@
       line-height: 3em;
       /* 垂直居中文字 */
       box-shadow: 0 2px 5px rgba(255, 153, 0, 0.3);
-      margin: 1em auto;
+      margin: 2em auto;
       /* 外间距 */
-      padding: 5px 10px;
+      padding: 0.5em 10px;
       /* 内间距 */
       transition: transform var(--transition-effect);
       /* 弹性曲线 */
+      transform: scale(1.1);
     }
 
     .lyctxt>.bar>button {
@@ -280,15 +286,12 @@
       border-radius: 8px;
       padding: 0.5em 1em;
       transition: transform var(--transition-effect);
-      -webkit-user-select: none;
-      user-select: none;
     }
 
     /* 悬停时放大 10%，提升阴影高度*/
     .lyctxt>.bar.active {
-      transform: translateY(-3px);
+      transform: translateY(-0.5em) scale(1.2);
       box-shadow: 0 6px 10px rgba(255, 153, 0, 0.5);
-      transform: scale(1.1);
     }
 
     .lyctxt>.bar>button:hover {
@@ -330,10 +333,10 @@
     <div class="bar">洛娅橙的订阅源　　　<button
         onclick="window.open('legado://import/rssSource?src=https://gitee.com/lyc486/yuedu2/raw/main/%E8%AE%A2%E9%98%85/%E6%B4%9B%E5%A8%85%E6%A9%99/lyc.json','_blank')">导入</button>
     </div>
-    <div class="bar">阅读测试版APP　　　<button
-        onclick="window.open('https://miaogongzi.lanzout.com/b01rgkhhe','_blank')">下载</button></div>
     <div class="bar">洛娅橙TG交流群　　　<button onclick="window.open('https://t.me/+ehUFQ0bVO59hNDI1','_blank')">加入</button>
     </div>
+    <div class="bar">阅读测试版APP　　　<button
+        onclick="window.open('https://miaogongzi.lanzout.com/b01rgkhhe','_blank')">下载</button></div>
     ，。
     <hr>
     友链
