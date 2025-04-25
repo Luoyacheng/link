@@ -1,5 +1,4 @@
 html {
-    overflow-x: hidden;
     padding: 0;
     -ms-overflow-style: none;
     /* 关滚动条 */
@@ -34,6 +33,7 @@ body {
     /*水平居中 */
     min-height: 90vh;
     width: 100vw;
+    overflow-x: hidden;
     overflow-wrap: break-word;
     word-break: break-word;
     /* 换行允许 */
