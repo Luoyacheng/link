@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /*.jpg$
+Disallow: /*.jpeg$
+Disallow: /*.png$
+Disallow: /*.gif$
+Disallow: /*.webp$
+Disallow: /*.svg$
+Disallow: /b/感谢投喂.html
+Sitemap: https://loyc.xyz/sitemap.xml
