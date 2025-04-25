@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>洛娅橙-阅读-八叉书库</title>
+    <meta name="author" content="洛娅橙">
+    <meta name="description" content="洛娅橙，阅读，发布，书源，八叉书库">
+    <meta name="keywords" content="洛娅橙,阅读,书源,luoyacheng,八叉书库">
+    <meta name="Robots" content="All">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://gitee.com/lyc486/yuedu/raw/master/favicon.svg">
+    <script>
+        (function () {
+            var isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|Opera Mini/i.test(navigator.userAgent);
+            var viewport = document.querySelector('meta[name="viewport"]');
+            if (isMobile) {
+                viewport.content = "width=device-width, initial-scale=1.0, user-scalable=no";
+            } else {
+                viewport.content = "width=device-width, initial-scale=1.0";
+            }
+        })();
+    </script>
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+    <h1 id="h1f">欢迎🎉，正在加载中。</h1>
+    <div class="toutu">
+        <img src="https://cdn.cdnjson.com/pic.html?url=https://gd-hbimg.huaban.com/d2e4dd6928850ce74c0a0318692a4fc238c7dfbf34025-1Z8m0l_fw1200webp"
+            alt="图片加载失败，不重要啦">
+        <button class="open-btn" onclick="toggleSidebar()">☰</button>
+    </div>
+
+    <div class="sidebar" id="mySidebar">
+        <button class="close-btn" onclick="closeSidebar(event)">╳</button>
+        <a href="/" class="hash-link">首页</a>
+        <a href="/#八叉" class="hash-link">八叉书库讲解</a>
+        <a href="/#P站" class="hash-link">pixiv小说讲解</a>
+        <a href="/#绅士" class="hash-link">绅士漫画介绍</a>
+        <a href="/#其它" class="hash-link">其它</a>
+    </div>
+    <div class="sidebar-overlay" onclick="closeSidebar(event)"></div>
+    <div class="lyctxt t1">
+        #2 @八叉书库：
+        tabc 一、登录界面介绍
+        ![图片未加载](https://channel.qpic.cn/psc?/channel/NaDwC23LjvXqrn3RH.9z8Tx.7oqZyCeAdzSVQa6ZgtX8VYHYNPsnf5nzNedqQgG2fFHTaTVMP9u*u1Oj*Ss7CgLq.KUgqVkFtbWB6CqZ7PU!/b=&bo=OARgCTgEYAkRHyg!&ek=1&t=8&tl=1
+        "登录界面" 90%)
+        tab 注册：到网站界面注册账号（目前已关闭网页注册，需给站长发邮箱）。
+        tab 登录：在“账号”和“密码”那两个横杠上填写刚注册的信息。然后点击这个登录按钮。
+        tab 登出：退出书源的账号登录状态。
+        tab 说明：点击时会弹窗提示书源的状态和介绍。
+        tab 延迟测试：测一下和网页的连接速度。
+        tab 启用下载：因为书源对章节加载做了特殊的加速优化。但可能会导致书籍下载异常，需要时就可以开启它。
+        tab 打开本书：使用阅读自带的浏览器打开本书网站界面。可以在网站上对书进行评论、评分等等操作。
+        tab <u>书名</u>：书源会自动填写。打开本书和屏蔽按钮操控的目标书籍。
+        tab 屏蔽：把本书加入书源内置的黑名单。以后在搜索和发现的列表里就不会再出现本书。误点击时可再次点击进行恢复。
+        tab 清理：操控屏蔽的黑名单。附加效果：输入<u>名单</u>会进行一次账号信息备份，输入<u>恢复</u>能复原备份的账号。
+        tab 版本更新：更新本书源。
+        tab 同步书架：开启功能后，会自动把阅读书架的书加入到网站的账号书架里。也可以在书籍详情页下拉刷新两次，主动加入到网站书架。
+        tab 书架：打开网站的书架地址，可以对网站账号书架的书进行移除书架等操作。
+        tab 查看日志：查看书源的更新日志。
+        tab 网站选书：打开网站主页，在网站上选择想观看的书籍后，右上角点✓会自动用阅读打开这本书的阅读详情页。
+        tab 书名：决定已在阅读书架的书是否跟随网站变换书名。
+        tab 净化封面：将书的封面图片用文字替代。
+        tab 书源介绍：打开本界面。
+        tab 反馈：打开本github开源仓库地址，可以提议题进行反馈（最好带上书源名称、软件版本号、书源版本号）。
+        tab <u>封面背景颜色</u>：可为空。亮色主题的参考可填写为<u>eeeeee</u>
+        tab <u>封面字体颜色</u>：可为空。亮色主题的参考可填写为<u>222222</u>
+        tab 网页登录：备用登录方式。
+        ，。
+        tabc 二、正则黑名单、白名单功能介绍
+        tab 正则有比较复杂的用法，这里讲解基础使用。
+        tab 现在带系统的小说满大街，但如果我个人又对这个厌恶，不像看到书源给我展示带系统的书该如何办呢？
+        tab 这个时候我们就可以在 <u>正则书名黑名单</u> 横线上填写 <u>/系统/</u> ，就可以实现目的。
+        tab 比如原本搜索人生，会出现一本名字叫做“人生系统”的书，现在就不会出现了。
+        tab 如果要屏蔽多个词语，就填写 <u>/系统|穿书|同人/</u> ，词语之间用|隔开。
+        tab 现在因为我个人是斗破粉丝，就算书名是“斗破系统”，我也想看到这本书，那么该如何解决呢？
+        tab 可以保持 <u>正则书名黑名单</u> 为 <u>/系统|穿书|同人/</u> 不变。
+        tab <u>正则书名白名单</u> 横线上填写 <u>/斗破/</u> 即可。
+        tab 这时候就实现搜索结果里书名为“人生系统”的书不再显示，但书名为“斗破系统”的书依旧正常显示。
+        tab 发现分类的书展示也会受该规则控制。
+        ，。
+        tabc 三、书籍详情页介绍
+        tab 如下图即为某书的详情页。
+        ![图片未加载](https://channel.qpic.cn/psc?/channel/NaDwC23LjvXqrn3RH.9z8cwqdpUwG1rjVT.9eiBu1RQsdkKw*MgXz*TM9XsqRLX7g9SILMlmKPPipYy8kdXNtnI4FZhUXeVFw1bXWvggyDQ!/b=&bo=OARgCTgEYAkRHyg!&ek=1&t=8&tl=1
+        "详情页" 90%)
+        tab 如下图为打开填写该书的书籍变量的方式。
+        ![图片未加载](https://channel.qpic.cn/psc?/channel/NaDwC23LjvXqrn3RH.9z8Xsyeq9R8NNkXfmt97nlP*uzF3OXsZULFy6c1Elcn7R8bjMBgmAg1XdAmAerVo2J7iIlTJMPCl8DgTtYlfmOPSQ!/b=&bo=YAlABqgMcAgRH9s!&ek=1&t=8&tl=1
+        "书籍变量" 90%)
+        tab 在书籍变量填写自己想发生的评论，保存后下拉刷新详情页就会发送评论出去。填写“10分”后刷新为该书评10分评价。
+        ，。
+        tabc 四、网站选书示意
+        ![图片未加载](https://channel.qpic.cn/psc?/channel/NaDwC23LjvXqrn3RH.9z8epqbe*Bzro*ybEEVmlLpuDZ196NeFMdPmeRBtLyHNZBH5KkuDIBdxUhX*X34icl9I.xgq1riM0FbFse4WFCaXE!/c=&bo=OARgCTgEYAkRHyg!&ek=1&t=8&tl=1
+        "网站选书" 90%)
+        tab 点击右上角的✓就会打开书源的对应详情页。如果不需要打开，点左上角的⬅退出即可。
+        ，。
+        tabc 五、结尾
+        tab 不少功能在阅读正式版APP上无法实现，所以请下载测试版进行体验。 
+        ，。
+        tabd <b style="float: right;margin-right: 5ex;">编辑于2025年4月24日·洛娅橙</b>
+        ，。，。
+    </div>
+    </div>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

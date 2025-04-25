@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>洛娅橙：感谢您的投喂</title>
+    <meta name="author" content="洛娅橙">
+    <meta name="description" content="洛娅橙，阅读，捐赠感谢">
+    <meta name="keywords" content="洛娅橙,阅读,书源,luoyacheng,感谢">
+    <meta name="Robots" content="All">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://gitee.com/lyc486/yuedu/raw/master/favicon.svg">
+    <script>
+        (function () {
+            var isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|Opera Mini/i.test(navigator.userAgent);
+            var viewport = document.querySelector('meta[name="viewport"]');
+            if (isMobile) {
+                viewport.content = "width=device-width, initial-scale=1.0, user-scalable=no";
+            } else {
+                viewport.content = "width=device-width, initial-scale=1.0";
+            }
+        })();
+    </script>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .toutu2 {
+            position: relative;
+            width: 30vw;
+            max-width: 300px;
+            /* 最大宽度值 */
+            margin: auto;
+            /* 可去，保证居中 */
+            overflow-x: hidden;
+            /* 防止溢出产生横向滚动条 */
+        }
+
+        .toutu2 img {
+            width: 100%;
+            border-radius: 10px;
+            /* 图片圆角 */
+        }
+
+        .dzqitao {
+            display: flex;
+            justify-content: center;
+            /* 水平居中 */
+            /* gap: 1%; */
+            /* 间距 */
+        }
+
+        .dzqitao .item {
+            display: flex;
+            flex-direction: column;/* 垂直布局 */
+            align-items: center;/* 子元素水平居中 */
+            /* text-align: center; */
+            width: 50vw;
+        }
+
+        .dzqitao img {
+            width: 80%;
+            border-radius: 8%;
+            display: block;
+            margin: 0 auto;
+            /* 水平居中，块级有效 */
+        }
+
+        .dzqitao a {
+            cursor: default;
+            /* 消点击提示 */
+            pointer-events: none;
+            /* 禁用点击 */
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .dzqitao a {
+                cursor: pointer;
+                pointer-events: auto;
+                /* 移动监测 */
+                -webkit-tap-highlight-color: transparent;
+                outline: none;
+                /* 无点击蓝框 */
+            }
+        }
+
+        .dzqitao+img {
+            width: 200px;
+            margin: 100px 10px auto auto;
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="h1f">感谢🙇。</h1>
+    <div class="toutu2">
+        <img src="https://gitee.com/lyc486/yuedu/raw/master/touwei.png" alt="图片加载失败">
+        <p style="white-space: pre-line;margin: 0 auto 2ex 0;"> ღ　ღ
+            ( >ᴗ<)
+             /っ❤️感谢投喂</p>
+                <button class="open-btn" onclick="toggleSidebar()">☰</button>
+    </div>
+
+    <div class="sidebar" id="mySidebar">
+        <button class="close-btn" onclick="closeSidebar(event)">╳</button>
+        <a href="/" class="hash-link">首页</a>
+        <a href="/#八叉" class="hash-link">八叉书库讲解</a>
+        <a href="/#P站" class="hash-link">pixiv小说讲解</a>
+        <a href="/#绅士" class="hash-link">绅士漫画介绍</a>
+        <a href="/#其它" class="hash-link">其它</a>
+    </div>
+    <div class="sidebar-overlay" onclick="closeSidebar(event)"></div>
+    <div class="lyctxt t1">
+        <div class="dzqitao">
+            <div class="item">
+                <span>通过支付宝投喂</span>
+                <a href="https://qr.alipay.com/2m613883ng8su37vqvbedfd"><img src="/i/zfqtt.jpg" alt="支付宝图加载失败"></a>
+            </div>
+            <div class="item">
+                <span>通过微信投喂</span>
+                <img src="/i/wxqtt.jpg" alt="微信图加载失败">
+            </div>
+        </div>
+        <img src="https://cdn.wantuju.com/pngsucai/imgRegular/20210802/55a5ff34-0ad7-4017-9496-4a05a8525653%20_102388_wantuju.png"
+            alt="图片加载失败">
+    </div>
+
+    </div>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

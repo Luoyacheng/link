@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>洛娅橙-阅读-封面规则</title>
+    <meta name="author" content="洛娅橙">
+    <meta name="description" content="洛娅橙，阅读，发布，教程，封面规则">
+    <meta name="keywords" content="洛娅橙,阅读,书源,luoyacheng,封面规则">
+    <meta name="Robots" content="All">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://gitee.com/lyc486/yuedu/raw/master/favicon.svg">
+    <script>
+        (function () {
+            var isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|Opera Mini/i.test(navigator.userAgent);
+            var viewport = document.querySelector('meta[name="viewport"]');
+            if (isMobile) {
+                viewport.content = "width=device-width, initial-scale=1.0, user-scalable=no";
+            } else {
+                viewport.content = "width=device-width, initial-scale=1.0";
+            }
+        })();
+    </script>
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+    <h1 id="h1f">欢迎🎉，正在加载中。</h1>
+    <div class="toutu">
+        <img src="https://cdn.cdnjson.com/pic.html?url=https://gd-hbimg.huaban.com/d2e4dd6928850ce74c0a0318692a4fc238c7dfbf34025-1Z8m0l_fw1200webp"
+            alt="图片加载失败，不重要啦">
+        <button class="open-btn" onclick="toggleSidebar()">☰</button>
+    </div>
+
+    <div class="sidebar" id="mySidebar">
+        <button class="close-btn" onclick="closeSidebar(event)">╳</button>
+        <a href="/" class="hash-link">首页</a>
+        <a href="/#八叉" class="hash-link">八叉书库讲解</a>
+        <a href="/#P站" class="hash-link">pixiv小说讲解</a>
+        <a href="/#绅士" class="hash-link">绅士漫画介绍</a>
+        <a href="/#其它" class="hash-link">其它</a>
+    </div>
+    <div class="sidebar-overlay" onclick="closeSidebar(event)"></div>
+    <div class="lyctxt t1">
+        #2 @封面规则：
+        tab 之前优书网还在，导入本地小说后，阅读软件会自动为小说匹配封面图片。现在优书网已停，原来的功能就失效了，这里分享一个默认封面匹配规则，让阅读软件的这个功能重启。
+        tab 首先按照下图所示来打开界面。
+        ![图片未加载](https://channel.qpic.cn/psc?/channel/NaDwC23LjvXqrn3RH.9z8fH83fEqg.WnFV6*ATvNy38K3L7qh0Dn0AEESaEpgSZe*N*SSWcwYRnDvTZx84GF3C4K7WlWb9mmN96GdtXtz3g!/b=&bo=YAlABqgMcAgRH9s!&ek=1&t=8&tl=1
+        "打开界面" 90%)
+        tab 然后按照下图所示来填写内容。
+        ![图片未加载](https://channel.qpic.cn/psc?/channel/NaDwC23LjvXqrn3RH.9z8bEUPNmo1*rfpavPn7k*zJvXnl66z8jtraGL13v75US1fzPpeXxmW9MeB0YMBfDT9g4lgf0aC.BYxcshhAzhp6A!/c=&bo=OARgCTgEYAkRHyg!&ek=1&t=8&tl=1
+        "填写内容" 90%)
+        tab 1、第一个横线填写
+        tab
+        <i>https://pre-api.tuishujun.com/api/searchBook?search_value={{key}}&first_type_id=0&second_type_id=0&source=&word_number_type=&min_word_number=0&max_word_number=0&update_type=&is_can_read=0&page=1&pageSize=10</i><button
+            onclick="copyText(this,'before')" style="margin-left: 2ex;">⎘复制</button>
+        tab 2、第二个横线填写
+        tab <i>@js:java.getString("$..data[?(@.author_nickname == '" + book.author + "')].cover")</i><button
+            onclick="copyText(this,'before')" style="margin-left: 2ex;">⎘复制</button>
+        tab 3、勾选启用。再点击确认即可。
+        tab 成功匹配封面，需要保证本地小说正确识别到书名和作者，并且查询的数据库含有这本书。
+        ，。
+        tabd <b style="float: right;margin-right: 5ex;">编辑于2025年4月25日·洛娅橙</b>
+        ，。，。
+    </div>
+
+    </div>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>
