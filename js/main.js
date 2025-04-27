@@ -142,3 +142,9 @@ function copyText(button, weizi) {
             }, 1500);
         });
 }
+function agree(button, txt, ts) {
+    if (button.textContent != txt) {
+        button.textContent = txt;
+        if (ts) button.insertAdjacentHTML('afterend', ts);
+    }
+}
