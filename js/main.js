@@ -78,11 +78,13 @@ function marktxt() {
     let text = container.innerHTML;
     // 定义替换规则
     const replaceRules = [
+        { regex: /\/\/tab.*/g, replacement: '' }, //注释
         { regex: /\!\[(.+)\]\((.+)\s+"(.+)" (.+)\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy" width="$4">' }, //图片
         { regex: /\[(.+?)\]\((.+?)\)/g, replacement: '<a href="$2" target="_blank">$1</a>' }, //链接
         { regex: /\s+#(\d) (.+)/g, replacement: '<h$1 style="margin:0.5em;line-height:1em;">$2</h$1>' }, //标题
         { regex: /~~(.+?)~~/g, replacement: '<del>$1</del>' }, //删除线
-        { regex: /\s+tabc\s(.*)/g, replacement: '<p style="margin:2ex;text-align: center;">$1</p>' }, //居中文本
+        { regex: /\s+tabc\s(.*)/g, replacement: '<p style="margin:2ex;text-align: center;">$1</p>' }, //居中
+        { regex: /\s+tabr\s(.*)/g, replacement: '<p style="margin:2ex;text-align: right;">$1</p>' }, //居右
         { regex: /\s+tabd\s(.*)/g, replacement: '<p style="margin:1ex;">$1</p>' }, //不缩进
         { regex: /\s+tab\s(.*)/g, replacement: '<p style="margin:1ex;">　　$1</p>' }, //缩进
         { regex: /，。/g, replacement: '<br>' } //换行
