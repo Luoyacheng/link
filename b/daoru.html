@@ -1,9 +1,16 @@
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 
 <head>
+    <meta charset="utf-8">
+    <title>阅读导入</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>导入</title>
+    <meta name="description" content="洛娅橙，阅读，书源、订阅源、字典、净化等json文件导入，书籍地址导入，链接净化。">
     <style>
+        .hidden {
+            display: none;
+        }
+
         body {
             display: flex;
             flex-direction: column;
@@ -58,6 +65,7 @@
 </head>
 
 <body>
+    <h1 class="hidden">在线导入-洛娅橙</h1>
     <textarea id="copyt" rows="9" placeholder="在这里填写链接
 支持书源、订阅源、净化、字典等json或txt文件
 支持书籍网址（需要有对应的书源）
