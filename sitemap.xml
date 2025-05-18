@@ -34,7 +34,11 @@
 
   <url>
     <loc>https://loyc.xyz/b/daoru.html</loc>
+<<<<<<< HEAD
     <lastmod>2025-05-19</lastmod>
+=======
+    <lastmod>2025-05-18</lastmod>
+>>>>>>> d110d8f21f2c81a0b209bad0b8460b9c7deafd67
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
