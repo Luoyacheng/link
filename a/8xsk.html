@@ -11,19 +11,7 @@
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://gitee.com/lyc486/yuedu/raw/master/favicon.svg">
-    <script>
-        (function () {
-            var isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|Opera Mini/i.test(navigator.userAgent);
-            var viewport = document.querySelector('meta[name="viewport"]');
-            if (isMobile) {
-                viewport.content = "width=device-width, initial-scale=1.0, user-scalable=no";
-            } else {
-                viewport.content = "width=device-width, initial-scale=1.0";
-            }
-        })();
-    </script>
     <link rel="stylesheet" href="/css/style.css">
-
 </head>
 
 <body>
@@ -35,7 +23,6 @@
     </div>
 
     <div class="sidebar" id="mySidebar">
-        <button class="close-btn" onclick="closeSidebar(event)">╳</button>
         <a href="/" class="hash-link">首页</a>
         <a href="/#八叉" class="hash-link">八叉书库讲解</a>
         <a href="/#P站" class="hash-link">pixiv小说讲解</a>

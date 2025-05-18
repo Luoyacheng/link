@@ -26,12 +26,6 @@ html {
     /* 添加平滑滚动 */
 }
 
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-    display: none !important;
-    /* 隐藏滚动条 */
-}
-
 body {
     margin: 0;
     display: flex;
@@ -48,9 +42,23 @@ body {
     /* 换行允许 */
 }
 
-/* 为隐藏属性的类 */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none !important;
+    /* 隐藏滚动条 */
+}
+
+button,
+.bar,
+.sidebar {
+    -webkit-user-select: none;
+    user-select: none;
+    /* 关闭复制 */
+}
+
 .hidden {
     display: none;
+    /* 为隐藏属性的类 */
 }
 
 .toutu {
@@ -90,27 +98,20 @@ body {
     /* 关闭触摸点击效果 */
 }
 
-button,
-.bar,
-.sidebar {
-    /* 关闭复制 */
-    -webkit-user-select: none;
-    user-select: none;
-}
-
 /* 侧边栏样式 */
 .sidebar {
     height: 100%;
     width: max(200px, 18%);
     position: fixed;
     top: 0;
-    left: calc(max(0px, calc((100vw - 1000px)/2)) - max(200px, 18%));
+    left: 0;
+    transform: translateX(calc(max(0px, (100vw - 1000px)/2) - max(200px, 18%)));
+    opacity: 0;
+    visibility: hidden;
     background-color: var(--back-color);
     padding-top: 40px;
-    transition: 0.4s ease;
+    transition: 0.5s ease;
     z-index: 3;
-    visibility: hidden;
-    opacity: 0;
 }
 
 /* 侧边栏链接样式 */
@@ -129,9 +130,7 @@ button,
 
 /* 侧边栏激活状态 */
 .sidebar.active {
-    left: calc(max(0px, calc((100vw - 1000px)/2)));
-    /* border-radius: 10px 0 0 0; */
-    /* 和图片一样圆角 */
+    transform: translateX(calc(max(0px, (100vw - 1000px)/2)));
     opacity: 1;
     visibility: visible;
 }
@@ -147,13 +146,13 @@ button,
     z-index: 1;
     visibility: hidden;
     opacity: 0;
-    transition: opacity 0.4s ease, visibility 0s 0.4s;
+    transition: opacity 0.5s ease, visibility 0s 0.5s;
 }
 
 .sidebar.active+.sidebar-overlay {
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.5s ease;
 }
 
 /* 内容文本样式 */

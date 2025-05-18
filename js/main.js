@@ -1,3 +1,12 @@
+(function () {
+    var isMobile = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|Opera Mini/i.test(navigator.userAgent);
+    var viewport = document.querySelector('meta[name="viewport"]');
+    if (isMobile) {
+        viewport.content = "width=device-width, initial-scale=1.0, user-scalable=no";
+    } else {
+        viewport.content = "width=device-width, initial-scale=1.0";
+    }
+})();
 const h1f = document.getElementById("h1f");
 h1f.classList.add("hidden");
 /* 切换界面 */
@@ -75,13 +84,13 @@ document.addEventListener('touchstart', function (e) {
 
 function marktxt() {
     let container = document.querySelector('.lyctxt.active');
-    container.style.willChange = 'opacity, transform'; // 启用优化
+   // container.style.willChange = 'opacity, transform'; // 启用优化
     requestAnimationFrame(() => {
         container.style.animation = 'fadeIn 0.6s ease-in forwards';
     }); //设置动画
-    container.addEventListener('animationend', () => {
+   /*  container.addEventListener('animationend', () => {
         container.style.willChange = 'auto'; // 动画结束释放资源
-    });
+    }); */
 
     let text = container.innerHTML;
     // 定义替换规则
