@@ -75,12 +75,20 @@ document.addEventListener('touchstart', function (e) {
 
 function marktxt() {
     let container = document.querySelector('.lyctxt.active');
+    container.style.willChange = 'opacity, transform'; // 启用优化
+    requestAnimationFrame(() => {
+        container.style.animation = 'fadeIn 0.6s ease-in forwards';
+    }); //设置动画
+    container.addEventListener('animationend', () => {
+        container.style.willChange = 'auto'; // 动画结束释放资源
+    });
+
     let text = container.innerHTML;
     // 定义替换规则
     const replaceRules = [
         { regex: /\/\/tab.*/g, replacement: '' }, //注释
         { regex: /\!\[(.+)\]\((.+)\s+"(.+)" (.+)\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy" width="$4">' }, //图片
-        { regex: /\!\[(.+),(.+)\]\((.+)\)\[(.+)\]\(([^\s"]+) "([^\s"]+)"\)/g, replacement: '<video width="$1" height="$2" $3><source src="$5" type="$6">$4</video>'}, //视频
+        { regex: /\!\[(.+),(.+)\]\((.+)\)\[(.+)\]\(([^\s"]+) "([^\s"]+)"\)/g, replacement: '<video width="$1" height="$2" $3><source src="$5" type="$6">$4</video>' }, //视频
         { regex: /\[(.+?)\]\((.+?)\)/g, replacement: '<a href="$2" target="_blank">$1</a>' }, //链接
         { regex: /\s+##(\d) (.+)/g, replacement: '<h$1 style="margin:0.5em;line-height:1em;">$2</h$1>' }, //标题
         { regex: /~~(.+?)~~/g, replacement: '<del>$1</del>' }, //删除线
@@ -106,9 +114,9 @@ function toggleSidebar() {
 }
 // 点击外部区域关闭
 document.addEventListener('click', function (event) {
-   //点击的是否为侧边栏内的链接，是否在侧边栏内，是否为打开按钮
-   const clicke=event.target;
-    if (clicke.closest('.sidebar a')||!clicke.closest('#mySidebar')&&!clicke.closest('.open-btn')) {
+    //点击的是否为侧边栏内的链接，是否在侧边栏内，是否为打开按钮
+    const clicke = event.target;
+    if (clicke.closest('.sidebar a') || !clicke.closest('#mySidebar') && !clicke.closest('.open-btn')) {
         document.getElementById("mySidebar").classList.remove("active");
     }
 });
