@@ -67,11 +67,11 @@ document.addEventListener('touchstart', function (e) {
     }
 });
 // 滚动时关闭所有状态
-window.addEventListener('scroll', function () {
+/* window.addEventListener('scroll', function () {
     document.querySelectorAll('.bar').forEach(box => {
         box.classList.remove('active');
     });
-}, { passive: true });
+}, { passive: true }); */
 
 function marktxt() {
     let container = document.querySelector('.lyctxt.active');
@@ -80,8 +80,9 @@ function marktxt() {
     const replaceRules = [
         { regex: /\/\/tab.*/g, replacement: '' }, //注释
         { regex: /\!\[(.+)\]\((.+)\s+"(.+)" (.+)\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy" width="$4">' }, //图片
+        { regex: /\!\[(.+),(.+)\]\((.+)\)\[(.+)\]\(([^\s"]+) "([^\s"]+)"\)/g, replacement: '<video width="$1" height="$2" $3><source src="$5" type="$6">$4</video>'}, //视频
         { regex: /\[(.+?)\]\((.+?)\)/g, replacement: '<a href="$2" target="_blank">$1</a>' }, //链接
-        { regex: /\s+#(\d) (.+)/g, replacement: '<h$1 style="margin:0.5em;line-height:1em;">$2</h$1>' }, //标题
+        { regex: /\s+##(\d) (.+)/g, replacement: '<h$1 style="margin:0.5em;line-height:1em;">$2</h$1>' }, //标题
         { regex: /~~(.+?)~~/g, replacement: '<del>$1</del>' }, //删除线
         { regex: /\s+tabc\s(.*)/g, replacement: '<p style="margin:2ex;text-align: center;">$1</p>' }, //居中
         { regex: /\s+tabr\s(.*)/g, replacement: '<p style="margin:2ex;text-align: right;">$1</p>' }, //居右
@@ -105,12 +106,10 @@ function toggleSidebar() {
 }
 // 点击外部区域关闭
 document.addEventListener('click', function (event) {
-    const sidebar = document.getElementById("mySidebar");
-    const isClickInside = sidebar.contains(event.target); //点击位置是否在侧边栏内
-    const isButtonClick = event.target.closest('.open-btn'); //点击的是否为打开按钮
-    const isLinkClick = event.target.closest('.sidebar a'); //点击的是否为侧边栏内的链接
-    if (((!isClickInside && !isButtonClick) || isLinkClick) && sidebar.classList.contains("active")) {
-        sidebar.classList.remove("active");
+   //点击的是否为侧边栏内的链接，是否在侧边栏内，是否为打开按钮
+   const clicke=event.target;
+    if (clicke.closest('.sidebar a')||!clicke.closest('#mySidebar')&&!clicke.closest('.open-btn')) {
+        document.getElementById("mySidebar").classList.remove("active");
     }
 });
 

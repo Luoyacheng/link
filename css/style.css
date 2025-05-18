@@ -1,12 +1,26 @@
+:root {
+    --back-color: #fffbf0;
+    --font-color: black;
+    --transition-effect: 0.4s cubic-bezier(0.25, 0.46, 0.45, 1.94);
+    /* 动画弹性曲线 */
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --back-color: #1a1a1a;
+        --font-color: white;
+    }
+}
+
 html {
     padding: 0;
     -ms-overflow-style: none;
     /* 关滚动条 */
     /* scrollbar-width: none; */
     /* 关滚动条 */
-    background-color: #fffbf0;
+    background-color: var(--back-color);
     /* 默认浅色背景 */
-    color: black;
+    color: var(--font-color);
     /* 默认文字颜色 */
     scroll-behavior: smooth;
     /* 添加平滑滚动 */
@@ -16,11 +30,6 @@ html::-webkit-scrollbar,
 body::-webkit-scrollbar {
     display: none !important;
     /* 隐藏滚动条 */
-}
-
-:root {
-    --transition-effect: 0.4s cubic-bezier(0.25, 0.46, 0.45, 1.94);
-    /* 动画弹性曲线 */
 }
 
 body {
@@ -96,7 +105,7 @@ button,
     position: fixed;
     top: 0;
     left: calc(max(0px, calc((100vw - 1000px)/2)) - max(200px, 18%));
-    background-color: #fffbf0;
+    background-color: var(--back-color);
     padding-top: 40px;
     transition: 0.4s ease;
     z-index: 3;
@@ -106,7 +115,7 @@ button,
 
 /* 侧边栏链接样式 */
 .sidebar a {
-    color: black;
+    color: var(--font-color);
     padding: 15px 25px;
     text-decoration: none;
     font-size: 18px;
@@ -145,48 +154,6 @@ button,
     opacity: 1;
     visibility: visible;
     transition: opacity 0.4s ease;
-}
-
-/* 新增关闭按钮样式 */
-.close-btn {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    width: 24px;
-    height: 24px;
-    background: rgba(251, 251, 251, 0.3);
-    border: none;
-    border-radius: 50%;
-    font-size: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
-    z-index: 1001;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.close-btn:hover {
-    background: rgba(51, 51, 51, 0.3);
-    transform: rotate(90deg);
-}
-
-/* 检测深色模式 */
-@media (prefers-color-scheme: dark) {
-    html {
-        background-color: #1a1a1a;
-        color: white;
-    }
-
-    .sidebar {
-        background-color: #1a1a1a;
-        color: white;
-    }
-
-    .sidebar :is(a, button) {
-        color: white;
-    }
 }
 
 /* 内容文本样式 */
