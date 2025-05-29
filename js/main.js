@@ -7,8 +7,7 @@
         viewport.content = "width=device-width, initial-scale=1.0";
     }
 })();
-const h1f = document.getElementById("h1f");
-h1f.classList.add("hidden");
+
 /* 切换界面 */
 window.addEventListener('DOMContentLoaded', checkHash);
 window.addEventListener('hashchange', checkHash);
@@ -20,6 +19,7 @@ function checkHash() {
         case '#P站': qiehuan("t3"); break;
         case '#绅士': qiehuan("t4"); break;
         case '#其它': qiehuan("t99"); break;
+        case '#at': qiehuan("t0"); break;
         default: qiehuan("t1"); break;
     }
     marktxt();//mark文本
