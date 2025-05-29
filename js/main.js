@@ -8,12 +8,11 @@
     }
 })();
 
-/* 切换界面 */
+// 页面加载和hash切换
 window.addEventListener('DOMContentLoaded', checkHash);
 window.addEventListener('hashchange', checkHash);
 function checkHash() {
-    let hash = window.location.hash;
-    hash = decodeURIComponent(hash);
+    let hash = decodeURIComponent(window.location.hash);
     switch (hash) {
         case '#八叉': qiehuan("t2"); break;
         case '#P站': qiehuan("t3"); break;
@@ -22,40 +21,60 @@ function checkHash() {
         case '#at': qiehuan("t0"); break;
         default: qiehuan("t1"); break;
     }
-    marktxt();//mark文本
-    window.scrollTo(0, 0); //从头浏览
+    marktxt();
+    window.scrollTo(0, 0);
 }
 
-//切换侧边栏
+// 切换内容区块
 function qiehuan(x) {
-    document.querySelectorAll('.lyctxt').forEach(div => {
-        div.classList.remove('active');
-    });
-    //显示目标区块
+    document.querySelectorAll('.lyctxt').forEach(div => div.classList.remove('active'));
     document.querySelector(`.lyctxt.${x}`).classList.add('active');
 }
 
-// 移动端和桌面端的点击和触摸处理函数
-function setupHover(element) {
-    let isTouch = false;
-    // 触摸处理
-    element.addEventListener('touchstart', function (e) {
-        isTouch = true;
-        activateElement(this);
-        /* e.preventDefault(); // 阻止默认行为 */
-    }, { passive: false });
-    element.addEventListener('touchend', function () {
-        isTouch = false;
-        setTimeout(() => deactivateElement(this), 200);
-    });
-    // 鼠标处理
-    element.addEventListener('mouseenter', function () {
-        if (!isTouch) activateElement(this);
-    });
-    element.addEventListener('mouseleave', function () {
-        if (!isTouch) deactivateElement(this);
-    });
+var isTouch = false;
+
+// 触摸事件：激活/关闭bar
+// 只处理.bar本身
+function isBarElement(el) {
+    return el.classList && el.classList.contains('bar');
 }
+document.addEventListener('touchstart', function (e) {
+    isTouch = true;
+    let tar = e.target;
+    if (isBarElement(tar)) {
+        activateElement(tar);
+    } else {
+        document.querySelectorAll('.bar').forEach(box => box.classList.remove('active'));
+    }
+});
+document.addEventListener('touchend', function (e) {
+    isTouch = false;
+    let tar = e.target;
+    if (isBarElement(tar)) {
+        setTimeout(() => deactivateElement(tar), 200);
+    } else if (tar.closest('.sidebar a')) {
+        closeSidebar(e);
+    }
+});
+
+// 鼠标悬浮事件：激活/关闭bar
+// 只处理.bar本身
+document.addEventListener('mouseover', function (e) {
+    let tar = e.target;
+    if (isBarElement(tar)) {
+       !isTouch && activateElement(tar);
+    }
+});
+document.addEventListener('mouseout', function (e) {
+    let tar = e.target;
+    if (isBarElement(tar)) {
+       !isTouch && deactivateElement(tar);
+    }
+    else if (tar.closest('.sidebar') && !(e.relatedTarget && e.relatedTarget.closest('.sidebar'))) {
+        !isTouch && closeSidebar(e);
+    }
+});
+
 // 激活bar元素
 function activateElement(el) {
     document.querySelectorAll('.bar').forEach(box => {
@@ -67,75 +86,43 @@ function activateElement(el) {
 function deactivateElement(el) {
     el.classList.remove('active');
 }
-// 全局触摸监听，清除bar状态
-document.addEventListener('touchstart', function (e) {
-    if (!e.target.closest('.bar')) {
-        document.querySelectorAll('.bar').forEach(box => {
-            box.classList.remove('active');
-        });
-    }
-});
-// 滚动时关闭所有状态
-/* window.addEventListener('scroll', function () {
-    document.querySelectorAll('.bar').forEach(box => {
-        box.classList.remove('active');
-    });
-}, { passive: true }); */
 
+// 内容区块动画和文本处理
 function marktxt() {
     let container = document.querySelector('.lyctxt.active');
-   // container.style.willChange = 'opacity, transform'; // 启用优化
     requestAnimationFrame(() => {
         container.style.animation = 'fadeIn 0.6s ease-in forwards';
-    }); //设置动画
-   /*  container.addEventListener('animationend', () => {
-        container.style.willChange = 'auto'; // 动画结束释放资源
-    }); */
-
+    });
     let text = container.innerHTML;
-    // 定义替换规则
     const replaceRules = [
-        { regex: /\/\/tab.*/g, replacement: '' }, //注释
-        { regex: /\!\[(.+)\]\((.+)\s+"(.+)" (.+)\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy" width="$4">' }, //图片
-        { regex: /\!\[(.+),(.+)\]\((.+)\)\[(.+)\]\(([^\s"]+) "([^\s"]+)"\)/g, replacement: '<video width="$1" height="$2" $3><source src="$5" type="$6">$4</video>' }, //视频
-        { regex: /\[(.+?)\]\((.+?)\)/g, replacement: '<a href="$2" target="_blank">$1</a>' }, //链接
-        { regex: /\s+##(\d) (.+)/g, replacement: '<h$1 style="margin:0.5em;line-height:1em;">$2</h$1>' }, //标题
-        { regex: /~~(.+?)~~/g, replacement: '<del>$1</del>' }, //删除线
-        { regex: /\s+tabc\s(.*)/g, replacement: '<p style="margin:2ex;text-align: center;">$1</p>' }, //居中
-        { regex: /\s+tabr\s(.*)/g, replacement: '<p style="margin:2ex;text-align: right;">$1</p>' }, //居右
-        { regex: /\s+tabd\s(.*)/g, replacement: '<p style="margin:1ex;">$1</p>' }, //不缩进
-        { regex: /\s+tab\s(.*)/g, replacement: '<p style="margin:1ex;">　　$1</p>' }, //缩进
-        { regex: /，。/g, replacement: '<br>' } //换行
+        { regex: /\/\/tab.*/g, replacement: '' },
+        { regex: /!\[(.+)\]\((.+)\s+"(.+)" (.+)\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy" width="$4">' },
+        { regex: /!\[(.+),(.+)\]\((.+)\)\[(.+)\]\(([^\s"]+) "([^\s"]+)"\)/g, replacement: '<video width="$1" height="$2" $3><source src="$5" type="$6">$4</video>' },
+        { regex: /\[(.+?)\]\((.+?)\)/g, replacement: '<a href="$2" target="_blank">$1</a>' },
+        { regex: /\s+##(\d) (.+)/g, replacement: '<h$1 style="margin:0.5em;line-height:1em;">$2</h$1>' },
+        { regex: /~~(.+?)~~/g, replacement: '<del>$1</del>' },
+        { regex: /\s+tabc\s(.*)/g, replacement: '<p style="margin:2ex;text-align: center;">$1</p>' },
+        { regex: /\s+tabr\s(.*)/g, replacement: '<p style="margin:2ex;text-align: right;">$1</p>' },
+        { regex: /\s+tabd\s(.*)/g, replacement: '<p style="margin:1ex;">$1</p>' },
+        { regex: /\s+tab\s(.*)/g, replacement: '<p style="margin:1ex;">　　$1</p>' },
+        { regex: /，。/g, replacement: '<br>' }
     ];
     replaceRules.forEach(rule => {
         text = text.replace(rule.regex, rule.replacement);
     });
-    //更新容器内容
     container.innerHTML = text;
-    // 初始化bar动画
-    container.querySelectorAll('.bar').forEach(setupHover);
 }
 
-//打开侧边栏
+// 侧边栏开关
 function toggleSidebar() {
-    const sidebar = document.getElementById("mySidebar");
-    sidebar.classList.toggle("active");
+    document.getElementById("mySidebar").classList.toggle("active");
 }
-// 点击外部区域关闭
-document.addEventListener('click', function (event) {
-    //点击的是否为侧边栏内的链接，是否在侧边栏内，是否为打开按钮
-    const clicke = event.target;
-    if (clicke.closest('.sidebar a') || !clicke.closest('#mySidebar') && !clicke.closest('.open-btn')) {
-        document.getElementById("mySidebar").classList.remove("active");
-    }
-});
-
 function closeSidebar(event) {
-    event.stopPropagation(); //阻止事件冒泡
-    const sidebar = document.getElementById("mySidebar");
-    sidebar.classList.remove("active");
+    event.stopPropagation();
+    document.getElementById("mySidebar").classList.remove("active");
 }
 
+// 复制文本
 function copyText(button, weizi) {
     const text = weizi == 'before' ?
         button.previousElementSibling.textContent :
@@ -143,7 +130,6 @@ function copyText(button, weizi) {
             button.nextElementSibling.textContent :
             '异常';
     const btext = button.textContent;
-    // 使用Clipboard API复制文本
     navigator.clipboard.writeText(text)
         .then(() => {
             button.textContent = "✓已复制";
@@ -152,7 +138,6 @@ function copyText(button, weizi) {
             }, 1500);
         })
         .catch(err => {
-            // 处理复制失败的情况
             console.error('复制失败:', err);
             button.textContent = "✗失败";
             setTimeout(() => {
@@ -160,6 +145,7 @@ function copyText(button, weizi) {
             }, 1500);
         });
 }
+// 按钮同意功能
 function agree(button, txt, ts) {
     if (button.textContent != txt) {
         button.textContent = txt;
