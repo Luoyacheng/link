@@ -37,6 +37,7 @@ body {
     min-height: 90vh;
     width: 100vw;
     overflow-x: hidden;
+    /* 防止溢出产生横向滚动条 */
     overflow-wrap: break-word;
     word-break: break-word;
     /* 换行允许 */
@@ -66,10 +67,6 @@ button,
     width: 100vw;
     max-width: 1000px;
     /* 最大宽度值 */
-    margin: 0 auto;
-    /* 可去，保证居中 */
-    overflow-x: hidden;
-    /* 防止溢出产生横向滚动条 */
 }
 
 .toutu img {
@@ -118,10 +115,9 @@ button,
 .sidebar a {
     color: var(--font-color);
     padding: 15px 25px;
-    text-decoration: none;
+    text-decoration: none; /* 去下划线 */
     font-size: 18px;
     display: block;
-    transition: 0.2s;
 }
 
 .sidebar a:hover {
@@ -177,13 +173,6 @@ button,
     }
 }
 
-/* 动画禁用时的备用样式 */
-/* @supports not (animation-name: fadeIn) {
-    .lyctxt {
-        opacity: 1;
-    }
-} */
-
 .lyctxt.active {
     display: block;
     /* 激活时显示 */
@@ -199,7 +188,7 @@ button,
 }
 
 /* bar相关 */
-.lyctxt>.bar {
+.bar {
     font-size: 2ex;
     width: 16em;
     height: 3em;
@@ -219,7 +208,7 @@ button,
     /* 弹性曲线 */
 }
 
-.lyctxt>.bar>button {
+.bar>button {
     background: #4CAF50;
     color: #f1f2f3;
     border: 1px solid #fd367e;
@@ -230,12 +219,12 @@ button,
 }
 
 /* 悬停时放大 10%，提升阴影高度*/
-.lyctxt>.bar.active {
+.bar.active {
     transform: translateY(-0.5em) scale(1.1);
     box-shadow: 0 6px 10px rgba(255, 153, 0, 0.5);
 }
 
-.lyctxt>.bar>button:hover {
+.bar>button:hover {
     box-shadow: 0 2px 6px 2px rgba(253, 54, 126, 0.4);
     transform: scale(0.8);
 }

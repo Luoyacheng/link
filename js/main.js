@@ -31,47 +31,24 @@ function qiehuan(x) {
     document.querySelector(`.lyctxt.${x}`).classList.add('active');
 }
 
-var isTouch = false;
-
-// 触摸事件：激活/关闭bar
-// 只处理.bar本身
+// 处理元素的点击和触摸事件
 function isBarElement(el) {
     return el.classList && el.classList.contains('bar');
 }
-document.addEventListener('touchstart', function (e) {
-    isTouch = true;
+document.addEventListener('pointerdown', function (e) {
     let tar = e.target;
     if (isBarElement(tar)) {
         activateElement(tar);
     } else {
-        document.querySelectorAll('.bar').forEach(box => box.classList.remove('active'));
+        document.querySelectorAll('.bar').forEach(b => b.classList.remove('active'));
     }
 });
-document.addEventListener('touchend', function (e) {
-    isTouch = false;
+document.addEventListener('pointerup', function (e) {
     let tar = e.target;
     if (isBarElement(tar)) {
         setTimeout(() => deactivateElement(tar), 200);
     } else if (tar.closest('.sidebar a')) {
         closeSidebar(e);
-    }
-});
-
-// 鼠标悬浮事件：激活/关闭bar
-// 只处理.bar本身
-document.addEventListener('mouseover', function (e) {
-    let tar = e.target;
-    if (isBarElement(tar)) {
-       !isTouch && activateElement(tar);
-    }
-});
-document.addEventListener('mouseout', function (e) {
-    let tar = e.target;
-    if (isBarElement(tar)) {
-       !isTouch && deactivateElement(tar);
-    }
-    else if (tar.closest('.sidebar') && !(e.relatedTarget && e.relatedTarget.closest('.sidebar'))) {
-        !isTouch && closeSidebar(e);
     }
 });
 
