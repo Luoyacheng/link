@@ -18,10 +18,16 @@ jobs:
     # 使用 curl 获取 HTML 内容
     - name: Fetch HTML content
       run: |
-        curl -s -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" \
-             -H "Referer: https://m.libahao.com/" \
-             -H "Accept: text/html" \
-             -k https://m.libahao.com/xiaoshuodaquan/page_204.html -o tt.html
+        # 定义目标 URL
+        URL="https://www.libahao.com/xiaoshuodaquan/page_204.html"
+
+        # 使用 curl 模拟完整的浏览器请求
+        curl -s -L \
+          -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" \
+          -H "Referer: https://m.libahao.com/" \
+          -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8" \
+          --retry 3 --retry-delay 5 \
+          -k "$URL" -o tt.html
 
     # 检查 HTML 文件是否有更新
     - name: Check for changes
