@@ -2,9 +2,6 @@ name: Scrape and Save HTML
 
 on:
   workflow_dispatch:         # 允许手动触发
-  schedule:
-    # 每隔一小时运行一次
-    - cron: "0 * * * *" # 使用 UTC 时间，格式为 cron 表达式
 
 jobs:
   scrape_and_save:
