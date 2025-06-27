@@ -62,6 +62,12 @@ document.addEventListener('pointerup', function (e) {
         closeSidebar(e);
     }
 });
+document.addEventListener('pointercancel', function (e) {
+if (activeBar) {
+        deactivateElement(activeBar);
+        activeBar = null;
+    }
+});
 
 // 激活bar元素
 function activateElement(el) {
