@@ -35,18 +35,29 @@ function qiehuan(x) {
 function isBarElement(el) {
     return el.classList && el.classList.contains('bar');
 }
+let activeBar = null; // 记录当前激活的bar元素
+
 document.addEventListener('pointerdown', function (e) {
     let tar = e.target;
     if (isBarElement(tar)) {
         activateElement(tar);
+        activeBar = tar;
     } else {
         document.querySelectorAll('.bar').forEach(b => b.classList.remove('active'));
+        activeBar = null;
     }
 });
 document.addEventListener('pointerup', function (e) {
     let tar = e.target;
-    if (isBarElement(tar)) {
-        setTimeout(() => deactivateElement(tar), 200);
+    // 如果 pointerup 不是在 bar 或不是同一个 bar，或者手指滑出，则取消激活
+    if (activeBar && tar !== activeBar) {
+        deactivateElement(activeBar);
+        activeBar = null;
+    } else if (isBarElement(tar)) {
+        setTimeout(() => {
+            deactivateElement(tar);
+            if (activeBar === tar) activeBar = null;
+        }, 200);
     } else if (tar.closest('.sidebar a')) {
         closeSidebar(e);
     }
