@@ -101,7 +101,7 @@
             const cpt = document.getElementById("copyt");
             let url = cpt.value;
             if (/[删除去消].*(?:[删除去掉].*[中汉我]|汉.*字|中.*文|文.*字)/.test(url)) url = url.replace(/[abphm]站|[一-ꀀ]/g, '');
-            url = url.replace(/[\s一-ꀀ，。？！；…“‘、’”]+$/, '').replace(/\s+|[\p{Emoji_Presentation}\p{Emoji}\u200D]+(?:\uFE0F)?|\[(?:酷币|受虐滑稽|微笑|哈哈哈|呵呵|呲牙|可爱|可怜|皱眉|惊讶|微笑|坏笑|流泪|抱拳|色|强|doge笑哭|doge原谅ta|旺财|OK)\]/giu, '').replace(/(\/.+\.(?:json|txt|zip))(?:[^\/\?\-\_\.][\S\s]*)$/, '$1').replace(/^[\S\s]+?(?=https?:)/i, '').replace(/\u0026/g, '%26');
+            url = url.replace(/[\s一-ꀀ，。？！；…“‘、’”]+$/, '').replace(/\s+|(?:\p{Emoji_Presentation}|\p{Emoji}[\uFE0F\u200d]+)+|\[(?:酷币|受虐滑稽|微笑|哈哈哈|呵呵|呲牙|可爱|可怜|皱眉|惊讶|微笑|坏笑|流泪|抱拳|色|强|doge笑哭|doge原谅ta|旺财|OK)\]/giu, '').replace(/(\/.+\.(?:json|txt|zip))(?:[^\/\?\-\_\.][\S\s]*)$/, '$1').replace(/^[\S\s]+?(?=https?:)/i, '').replace(/\u0026/g, '%26');
             if (url.startsWith('data:')) url = atob(url.match(/^[^,]+,([^\s,]+)/)[1]);
             else if (/^[\da-z\+\/]{2,}=*$/i.test(url)) url = atob(url);
             setTimeout(() => {
