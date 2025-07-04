@@ -25,6 +25,17 @@ function checkHash() {
     window.scrollTo(0, 0);
 }
 
+//侧边栏内容处理
+const sidebar = document.getElementById('mySidebar');
+if (sidebar) {
+    sidebar.innerHTML = `
+<a href="/" class="hash-link">首页</a>
+<a href="/#八叉" class="hash-link">八叉书库讲解</a>
+<a href="/#P站" class="hash-link">pixiv小说讲解</a>
+<a href="/#绅士" class="hash-link">绅士漫画介绍</a>
+<a href="/boke/" class="hash-link">博客贴</a>`;
+}
+
 // 切换内容区块
 function qiehuan(x) {
     document.querySelectorAll('.lyctxt').forEach(div => div.classList.remove('active'));
@@ -63,7 +74,7 @@ document.addEventListener('pointerup', function (e) {
     }
 });
 document.addEventListener('pointercancel', function (e) {
-if (activeBar) {
+    if (activeBar) {
         deactivateElement(activeBar);
         activeBar = null;
     }
