@@ -5,8 +5,8 @@
     --font-color: black;
     --transition-effect: 0.4s cubic-bezier(0.25, 0.46, 0.45, 1.94);
     /* 动画弹性曲线 */
-    --sidebar-left: -200px;
-    --sidebar-width: 200px;
+    --sidebar-left: -180px;
+    --sidebar-width: 180px;
     --bar-back-op: 1;
 }
 
@@ -15,7 +15,6 @@
         --back-color: 20, 20, 20;
         --back-color-c: 0, 0, 0;
         --font-color: white;
-        --bar-back-color: #1a1a1a;
     }
 }
 
@@ -23,6 +22,7 @@
 @media (min-width: 1400px) {
     :root {
         --sidebar-left: calc((100vw - 1000px)/2 - 200px);
+        --sidebar-width: 200px;
         --bar-back-op: 0.5;
     }
 }
@@ -117,11 +117,10 @@ button,
     position: fixed;
     top: 0;
     left: var(--sidebar-left);
-    opacity: 0;
     visibility: hidden;
     background-color: rgba(var(--back-color), var(--bar-back-op));
     padding-top: 40px;
-    transition: 0.3s;
+    transition: 0.2s;
     z-index: 3;
 }
 
@@ -147,6 +146,9 @@ button,
 }
 
 @media (min-width: 1400px) {
+    .sidebar {
+        opacity: 0;
+    }
     .sidebar.active {
         left: var(--sidebar-left);
     }
