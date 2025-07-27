@@ -116,7 +116,7 @@ button,
     visibility: hidden;
     background-color: var(--back-color);
     padding-top: 40px;
-    transition: 0.5s ease;
+    transition: 0.3s;
     z-index: 3;
 }
 
