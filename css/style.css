@@ -1,14 +1,24 @@
 :root {
+    color-scheme: light dark;
     --back-color: #fffbf0;
     --font-color: black;
     --transition-effect: 0.4s cubic-bezier(0.25, 0.46, 0.45, 1.94);
     /* 动画弹性曲线 */
+    --sidebar-left: -200px;
+    --sidebar-width: 200px;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
         --back-color: #1a1a1a;
         --font-color: white;
+    }
+}
+
+
+@media (min-width: 1400px) {
+    :root {
+        --sidebar-left: calc((100vw - 1000px)/2 - 200px);
     }
 }
 
@@ -98,11 +108,10 @@ button,
 /* 侧边栏样式 */
 .sidebar {
     height: 100%;
-    width: max(200px, 18%);
+    width: var(--sidebar-width);
     position: fixed;
     top: 0;
-    left: 0;
-    transform: translateX(calc(max(0px, (100vw - 1000px)/2) - max(200px, 18%)));
+    left: var(--sidebar-left);
     opacity: 0;
     visibility: hidden;
     background-color: var(--back-color);
@@ -115,7 +124,8 @@ button,
 .sidebar a {
     color: var(--font-color);
     padding: 15px 25px;
-    text-decoration: none; /* 去下划线 */
+    text-decoration: none;
+    /* 去下划线 */
     font-size: 18px;
     display: block;
 }
@@ -126,9 +136,15 @@ button,
 
 /* 侧边栏激活状态 */
 .sidebar.active {
-    transform: translateX(calc(max(0px, (100vw - 1000px)/2)));
+    left: 0;
     opacity: 1;
     visibility: visible;
+}
+
+@media (min-width: 1400px) {
+    .sidebar.active {
+        left: var(--sidebar-left);
+    }
 }
 
 /* 遮罩，关闭侧边栏 */
