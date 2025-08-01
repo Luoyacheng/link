@@ -99,12 +99,13 @@ function marktxt() {
         container.style.animation = 'fadeIn 0.6s ease-in forwards';
     });
     let text = container.innerHTML;
+    console.log('原始文本:', text);
     const replaceRules = [
         { regex: /\/\/tab.*/g, replacement: '' },
         { regex: /!\[(.+)\]\((.+)\s+"(.+)" (.+)\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy" width="$4">' },
         { regex: /!\[(.+),(.+)\]\((.+)\)\[(.+)\]\(([^\s"]+) "([^\s"]+)"\)/g, replacement: '<video width="$1" height="$2" $3><source src="$5" type="$6">$4</video>' },
         { regex: /\[(.+?)\]\((.+?)\)/g, replacement: '<a href="$2" target="_blank">$1</a>' },
-        { regex: /\s+##(\d) (.+)/g, replacement: '<h$1 style="margin:0.5em;line-height:1em;">$2</h$1>' },
+        { regex: /\s+##(\d) (.+)/g, replacement: '\n<h$1 style="margin:0.5em;line-height:1em;">$2</h$1>' },
         { regex: /~~(.+?)~~/g, replacement: '<del>$1</del>' },
         { regex: /\s+tabc\s(.*)/g, replacement: '<p style="margin:2ex;text-align: center;">$1</p>' },
         { regex: /\s+tabr\s(.*)/g, replacement: '<p style="margin:2ex;text-align: right;">$1</p>' },
@@ -114,7 +115,9 @@ function marktxt() {
     ];
     replaceRules.forEach(rule => {
         text = text.replace(rule.regex, rule.replacement);
+        console.log(`替换规则: ${rule.regex}`, '替换为:', text);
     });
+    console.log('处理后的文本:', text);
     container.innerHTML = text;
 }
 
