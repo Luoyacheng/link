@@ -99,7 +99,6 @@ function marktxt() {
         container.style.animation = 'fadeIn 0.6s ease-in forwards';
     });
     let text = container.innerHTML;
-    console.log('原始文本:', text);
     const replaceRules = [
         { regex: /\/\/tab.*/g, replacement: '' },
         { regex: /!\[(.+)\]\((.+)\s+"(.+)" (.+)\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy" width="$4">' },
@@ -115,9 +114,7 @@ function marktxt() {
     ];
     replaceRules.forEach(rule => {
         text = text.replace(rule.regex, rule.replacement);
-        console.log(`替换规则: ${rule.regex}`, '替换为:', text);
     });
-    console.log('处理后的文本:', text);
     container.innerHTML = text;
 }
 
