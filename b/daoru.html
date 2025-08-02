@@ -68,6 +68,10 @@
             transform: scale(0.8);
         }
 
+        button {
+            margin: 10px;
+        }
+
         #btn1 {
             background-color: rgba(76, 175, 80, 0.9);
         }
@@ -79,6 +83,22 @@
         #btn3 {
             background-color: rgba(76, 80, 175, 0.9);
         }
+
+        #history {
+            width: 90%;
+            margin: 8px 2%;
+        }
+
+        #history div {
+            font-size: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            padding: 4px 8px;
+            margin: 10px 0;
+            background-color: rgba(75, 175, 175, 0.3);
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
     </style>
 </head>
 
@@ -88,13 +108,25 @@
 支持书源、订阅源、净化、字典等json或txt文件
 支持书籍网址（需要有对应的书源）
 支持data或base64加密链接"></textarea>
-    <br>
     <button id="btn1" onclick="copy(1)">导入</button>
-    <br>
     <button id="btn2" onclick="cleart()">清空</button>
-    <br>
     <button id="btn3" onclick="copy(3)">净化</button>
+    <div id="history"></div>
     <script>
+        function showHistory() {
+            const historyDiv = document.getElementById('history');
+            let history = JSON.parse(localStorage.getItem('importHistory') || '[]');
+            if (history.length === 0) {
+                historyDiv.innerHTML = '<span style="font-size:12px;color:gray;">暂无导入历史</span>';
+                return;
+            }
+            historyDiv.innerHTML = history.map(item =>
+                `<div onclick="fillHistory('${encodeURIComponent(item)}')">${item}</div>`
+            ).reverse().join('');
+        }
+        function fillHistory(val) {
+            document.getElementById('copyt').value = decodeURIComponent(val);
+        }
         function copy(x) {
             const btn = document.getElementById('btn' + x);
             btn.classList.add('an-s');
@@ -109,6 +141,12 @@
             }, 500);
             if (url == '') { alert('请输入内容'); return }
             if (/^https?\:/i.test(url) && x == 1) {
+                let history = JSON.parse(localStorage.getItem('importHistory') || '[]');
+                history = history.filter(item => item != url);
+                history.push(url);
+                if (history.length > 20) history = history.slice(-20);
+                localStorage.setItem('importHistory', JSON.stringify(history));
+                showHistory();
                 if (/\/.+\.(?:json|txt)/i.test(url)) {
                     window.location.href = 'legado://import/Source?src=' + url;
                 }
@@ -131,6 +169,24 @@
             }, 300);
             cpt.value = '';
         }
+
+        let clearTimer = null;
+        const btn2 = document.getElementById('btn2');
+        btn2.addEventListener('pointerdown', function () {
+            clearTimer = setTimeout(() => {
+                localStorage.removeItem('importHistory');
+                showHistory();
+                alert('已清空历史记录');
+            }, 800);
+        });
+        btn2.addEventListener('pointerup', function () {
+            clearTimeout(clearTimer);
+        });
+        btn2.addEventListener('pointercancel', function () {
+            clearTimeout(clearTimer);
+        });
+
+        window.onload = showHistory;
     </script>
 </body>
 
