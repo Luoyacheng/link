@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <title>洛娅橙-阅读-工具</title>
+    <meta name="author" content="洛娅橙">
+    <meta name="description" content="洛娅橙，开源阅读，发布，规则教程，工具，网络小说，luoyacheng，开发">
+    <meta name="keywords" content="洛娅橙,阅读,书源,luoyacheng,工具开发">
+    <meta name="Robots" content="All">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://gitee.com/lyc486/yuedu/raw/master/favicon.svg">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <h1 class="hidden">欢迎🎉，工具页正在加载中。</h1>
+    <div class="toutu">
+        <h2 style="width:50%; margin:10% auto;">朴实无华的工具界面</h2>
+        <button class="open-btn" onclick="toggleSidebar()">☰</button>
+    </div>
+
+    <div class="sidebar" id="mySidebar"></div>
+    <div class="sidebar-overlay" onclick="closeSidebar(event)"></div>
+    <div class="lyctxt t1">
+        <p>　　当前UA信息：</p>
+        <div style="padding: 10px 10%;">
+            <i id="uaDisplay"></i><button onclick="copyText(this,'before')" style="margin-left: 2ex;">⎘复制</button>
+        </div>
+        <p>　　可用屏幕分辨率：</p>
+        <div style="padding: 10px 10%;">
+            <i id="pxDisplay"></i>
+        </div>
+        <p>　　浏览器本地语言：</p>
+        <div style="padding: 10px 10%;">
+            <i id="lgDisplay"></i>
+        </div>
+    </div>
+    <script src="/js/main.js"></script>
+    <script>
+        const userAgent = navigator.userAgent;
+        const uaDisplay = document.getElementById('uaDisplay');
+        uaDisplay.textContent = userAgent;
+        document.getElementById('pxDisplay').textContent = `${screen.width} × ${screen.height} 像素`;
+        document.getElementById('lgDisplay').textContent = navigator.language;
+    </script>
+</body>
+
+</html>
