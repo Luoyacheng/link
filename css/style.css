@@ -285,6 +285,7 @@ button,
     margin: 1.5rem 0;
     overflow-x: auto;
     position: relative;
+    color: white;
     font-family: 'Fira Code', 'Consolas', monospace;
 }
 
