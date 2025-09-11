@@ -100,22 +100,59 @@ function marktxt() {
     });
     let text = container.innerHTML;
     const replaceRules = [
+        { regex: /```([\s\S]+?)```/g, replacement: '<div class="code"><pre>$1</pre></div>' },
         { regex: /\/\/tab.*/g, replacement: '' },
-        { regex: /!\[(.+)\]\((.+)\s+"(.+)" (.+)\)/g, replacement: '<img alt="$1" src="$2" title="$3" loading="lazy" width="$4">' },
-        { regex: /!\[(.+),(.+)\]\((.+)\)\[(.+)\]\(([^\s"]+) "([^\s"]+)"\)/g, replacement: '<video width="$1" height="$2" $3><source src="$5" type="$6">$4</video>' },
+        { regex: /!\[(.+)\]\((.+)\s+"(.+)" (.+)\)/g, replacement: '<img class="lycimg" alt="$1" src="$2" title="$3" loading="lazy" width="$4">' },
+        { regex: /!\[(.+),(.+)\]\((.+)\)\[(.+)\]\(([^\s"]+) "([^\s"]+)"\)/g, replacement: '<video class="lycvideo" width="$1" height="$2" $3><source src="$5" type="$6">$4</video>' },
         { regex: /\[(.+?)\]\((.+?)\)/g, replacement: '<a href="$2" target="_blank">$1</a>' },
         { regex: /\s+##(\d) (.+)/g, replacement: '\n<h$1 style="margin:0.5em;line-height:1em;">$2</h$1>' },
-        { regex: /~~(.+?)~~/g, replacement: '<del>$1</del>' },
-        { regex: /\s+tabc\s(.*)/g, replacement: '<p style="margin:2ex;text-align: center;">$1</p>' },
-        { regex: /\s+tabr\s(.*)/g, replacement: '<p style="margin:2ex;text-align: right;">$1</p>' },
-        { regex: /\s+tabd\s(.*)/g, replacement: '<p style="margin:1ex;">$1</p>' },
-        { regex: /\s+tab\s(.*)/g, replacement: '<p style="margin:1ex;">　　$1</p>' },
-        { regex: /，。/g, replacement: '<br>' }
+        { regex: /~~(.+?)~~/g, replacement: '<del>$1</del>' }
     ];
     replaceRules.forEach(rule => {
         text = text.replace(rule.regex, rule.replacement);
     });
+    text = text.replace(/\s+(tab.?)\s(.+)|，。/g,(match,p1,p2) => {
+        if (match === '，。') return '<br>';
+        if (p1=='tabc') return `<p style="margin:2ex;text-align: center;">${p2}</p>`;
+        if (p1=='tabr') return `<p style="margin:2ex;text-align: right;">${p2}</p>`;
+        if (p1=='tabd') return `<p style="margin:1ex;">${p2}</p>`;
+        if (p1=='tab') return `<p style="margin:1ex;">　　${p2}</p>`;
+        return match;
+    });
+
     container.innerHTML = text;
+    container.querySelectorAll('.code').forEach(preBlock => {
+        const btext = '复制';
+        const button = document.createElement('button');
+        button.className = 'copy-btn';
+        button.textContent = btext;
+        const pre = preBlock.querySelector('pre');
+        pre.innerHTML = pre.innerText
+        .replace(/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|(@js:|{{|}}|\$\.)|[?!+=\-:&\|]/g, (match,p1) => {
+            if (match.length == 1) return `<span class="keychar">${match}</span>`;
+            else if (p1) return `<span class="legadokey">${p1}</span>`;
+            return `<span class="string">${match}</span>`
+        })
+        .replace(/\b(var|let|const|function)\b/g,'<span class="keyword">$1</span>')
+        .replace(/(?<=\s)(\/\/.+)/g,'<span class="comment">$1</span>');
+        preBlock.appendChild(button);
+        button.addEventListener('click', () => {
+            navigator.clipboard.writeText(pre.innerText)
+                .then(() => {
+                    button.textContent = "✓已复制";
+                    setTimeout(() => {
+                        button.textContent = btext;
+                    }, 1500);
+                })
+                .catch(err => {
+                    console.error('复制失败:', err);
+                    button.textContent = "✗失败";
+                    setTimeout(() => {
+                        button.textContent = btext;
+                    }, 1500);
+                });
+        });
+    });
 }
 
 // 侧边栏开关

@@ -33,13 +33,25 @@
         tab 然后按照下图所示来填写内容。
         ![图片未加载](https://channel.qpic.cn/psc?/channel/NaDwC23LjvXqrn3RH.9z8bEUPNmo1*rfpavPn7k*zJvXnl66z8jtraGL13v75US1fzPpeXxmW9MeB0YMBfDT9g4lgf0aC.BYxcshhAzhp6A!/c=&bo=OARgCTgEYAkRHyg!&ek=1&t=8&tl=1
         "填写内容" 90%)
+        tab 下面代码进行过优化，和图片显示的内容有少许差别，请以代码为准。
         tab 1、第一个横线填写
-        tab
-        <i>https://pre-api.tuishujun.com/api/searchBook?search_value={{key}}&first_type_id=0&second_type_id=0&source=&word_number_type=&min_word_number=0&max_word_number=0&update_type=&is_can_read=0&page=1&pageSize=10</i><button
-            onclick="copyText(this,'before')" style="margin-left: 2ex;">⎘复制</button>
+```https://pre-api.tuishujun.com/api/searchBook?search_value={{key}}&page=1&pageSize=20```
         tab 2、第二个横线填写
-        tab <i>@js:java.getString("$..data[?(@.author_nickname == '" + book.author + "')].cover")</i><button
-            onclick="copyText(this,'before')" style="margin-left: 2ex;">⎘复制</button>
+```@js:
+result=com.jayway.jsonpath.JsonPath.read(result,'$.data.data[*]');
+var na=String(book.name),au=String(book.author),ur='';
+for (let char of result) {
+    //本地书名包含搜索结果书名
+    if (na.includes(char.title+'')) {
+        let au2 = char.author_nickname+'';
+        //作者匹配
+        if (au.includes(au2)||au2.includes(au)) {
+            ur = char.cover;
+            break; //已找到，放弃后续查询
+        }
+    }
+}
+ur```
         tab 3、勾选启用。再点击确认即可。
         tab 本地小说的书名和作者正常，并且查询的数据库含有这本书才会成功匹配封面。
         ，。
