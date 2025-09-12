@@ -12,12 +12,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://gitee.com/lyc486/yuedu/raw/master/favicon.svg">
     <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
+    <style>
+        p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        i {
+            font-size: 12px;
+        }
+
+        textarea {
+            font-size: 12px;
+            color: var(--font-color);
+            width: 90%;
+            height: auto;
+            margin: 16px 2%;
+            padding: 8px;
+            background-color: rgba(50, 50, 50, 0.1);
+            border-radius: 10px;
+            border: 2px solid rgba(150, 150, 150, 0.3);
+        }
+
+        textarea:focus {
+            border-color: rgb(150, 150, 150);
+            outline: none;
+            box-shadow: 0 0 8px rgba(210, 210, 210, 0.3);
+        }
+
+        textarea~button {
+            color: white;
+            border: none;
+            border-radius: 4px;
+            height: 40px;
+            width: 80px;
+            margin: 10px;
+            overflow: hidden;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        .an-s {
+            transform: scale(0.8);
+        }
+
+        #btn1 {
+            background-color: rgba(76, 175, 80, 0.9);
+        }
+
+        #btn2 {
+            background-color: rgba(175, 76, 80, 0.9);
+        }
+    </style>
 </head>
 
 <body>
     <h1 class="hidden">欢迎🎉，工具页正在加载中。</h1>
     <div class="toutu">
-        <h2 style="width:50%; margin:10% auto;">朴实无华的工具界面</h2>
+        <h2 style="width:100%; margin:10% auto; text-align:center;">简单的网页小工具</h2>
         <button class="open-btn" onclick="toggleSidebar()">☰</button>
     </div>
 
@@ -25,25 +78,110 @@
     <div class="sidebar-overlay" onclick="closeSidebar(event)"></div>
     <div class="lyctxt t1">
         <p>　　当前UA信息：</p>
-        <div style="padding: 10px 10%;">
-            <i id="uaDisplay"></i><button onclick="copyText(this,'before')" style="margin-left: 2ex;">⎘复制</button>
+        <div style="padding: 0px 10%;">
+            <i id="uaDisplay"></i><button onclick="copyText(this,'before')"
+                style="margin-left:2ex;width:46px;height:20px;font-size:12px;border:none;border-radius:12px;">⎘复制</button>
         </div>
-        <p>　　可用屏幕分辨率：</p>
-        <div style="padding: 10px 10%;">
-            <i id="pxDisplay"></i>
+        <div style="display: flex; gap: 30px; padding: 10px 10%;">
+            <div style="padding: 10px 10%;">
+                <p>可用屏幕分辨率：</p>
+                <i id="pxDisplay"></i>
+            </div>
+            <div style="padding: 10px 10%;">
+                <p>浏览器本地语言：</p>
+                <i id="lgDisplay"></i>
+            </div>
         </div>
-        <p>　　浏览器本地语言：</p>
-        <div style="padding: 10px 10%;">
-            <i id="lgDisplay"></i>
+        <div style="width: 100%; text-align: center;">
+            <textarea id="text" rows="9" placeholder="填入文本"
+                oninput="this.style.height='';this.style.height=this.scrollHeight+'px';"></textarea>
+            <button id="btn1" onclick="txt(1)">哈希</button><button id="btn2" onclick="txt(2)">解密</button>
         </div>
+        <div id="text2" style="width: 100%; text-align: center;"></div>
+
     </div>
     <script src="/js/main.js"></script>
+    <script>
+        const toastStyle = document.createElement('style');
+        toastStyle.textContent = ".toast-container {position: fixed;z-index: 1000;pointer-events: none;display: flex;flex-direction: column;align-items: center;} .toast-container.top-center {top: 20px;left: 50%;transform: translateX(-50%);} .toast-container.top-left {top: 20px;left: 20px;} .toast-container.top-right {top: 20px;right: 20px;} .toast-container.bottom-center {bottom: 20px;left: 50%;transform: translateX(-50%);} .toast-container.bottom-left {bottom: 20px;left: 20px;} .toast-container.bottom-right {bottom: 20px;right: 20px;} .toast {background: rgba(0, 0, 0, 0.8);color: white;padding: 12px 14px;border-radius: 4px;margin-bottom: 10px;word-break: initial;max-width: 80vw;opacity: 0;transform: translateY(20px);transition: opacity 0.3s, transform 0.3s;pointer-events: none;} .toast.show {opacity: 1;transform: translateY(0);} .toast.success {background: rgba(46, 204, 113, 0.9);} .toast.error {background: rgba(231, 76, 60, 0.9);} .toast.warning {background: rgba(241, 196, 15, 0.9);} .toast.info {background: rgba(52, 152, 219, 0.9);}";
+        document.head.appendChild(toastStyle);
+        function showToast(message, duration = 3000, type = 'default', position = 'bottom-center') {
+            let container = document.querySelector('.toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.className = 'toast-container';
+                document.body.appendChild(container);
+            }
+            container.className = "toast-container " + position;
+            const toast = document.createElement('div');
+            toast.className = "toast " + type;
+            toast.innerHTML = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }, duration);
+        }
+    </script>
     <script>
         const userAgent = navigator.userAgent;
         const uaDisplay = document.getElementById('uaDisplay');
         uaDisplay.textContent = userAgent;
         document.getElementById('pxDisplay').textContent = `${screen.width} × ${screen.height} 像素`;
         document.getElementById('lgDisplay').textContent = navigator.language;
+        function txt(x) {
+            const textArea = document.getElementById('text');
+            let inputText = textArea.value;
+            if (inputText === '') {
+                showToast('请输入文本', 3000, null, 'top-right');
+                return;
+            }
+            const textArea2 = document.getElementById('text2');
+            if (x === 1) {
+                const md5_32 = md5(text).toLowerCase();
+                const md5_16 = md5_32.substring(8, 24);
+                textArea2.textContent = md5_16;
+            } else if (x === 2) {
+                try {
+                    if (inputText.startsWith('data:')) {
+                        textArea2.textContent = atob(inputText.match(/^[^,]+,([^\s,]+)/)[1]);
+                    }
+                    else if (/^[0-9A-F]+$/.test(inputText)) {
+                        function hTs(hex) {
+                            if (hex.length % 2 !== 0) hex = '0' + hex;
+                            const bytes = new Uint8Array(hex.length / 2);
+                            for (let i = 0; i < hex.length; i += 2)
+                                bytes[i / 2] = parseInt(hex.substr(i, 2), 16);
+                            return new TextDecoder('utf-8').decode(bytes);
+                        }
+                        textArea2.textContent = hTs(inputText);
+                    }
+                    else if (/^[01]+$/.test(inputText)) {
+                        function bTs(bin) {
+                            const bytes = new Uint8Array(bin.length / 8);
+                            for (let i = 0; i < bin.length; i += 8)
+                                bytes[i / 8] = parseInt(bin.substr(i, 8), 2);
+                            return new TextDecoder('utf-8').decode(bytes);
+                        }
+                        textArea2.textContent = bTs(inputText);
+                    }
+                    else if (/^[A-Za-z0-9+/]+={0,2}$/.test(inputText)) {
+                        textArea2.textContent = atob(inputText);
+                    }
+
+                } catch (e) {
+                    showToast('解密失败' + e, 6000, 'error');
+                }
+            }
+
+        }
     </script>
 </body>
 
