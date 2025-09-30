@@ -54,10 +54,11 @@
     <script src="/js/main.js"></script>
     <script>
         function agreeb(button) {
+button.textContent = '已确认';
             window.close();
             setTimeout(() => {
                 agree(button,'已确认','<p>软件可能不符合，请手动点击右上角✓退出</p>');
-            }, 800);
+            }, 1000);
         }
     </script>
 </body>
