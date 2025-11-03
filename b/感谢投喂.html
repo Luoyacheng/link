@@ -77,6 +77,79 @@
             margin: 100px 10px auto auto;
             float: right;
         }
+
+        .kmd {
+            position: fixed;
+            left: 20px;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            align-items: center;
+        }
+
+        .btn1 {
+            background: linear-gradient(to right, #00b09b, #96c93d);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(150, 201, 61, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(150, 201, 61, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(150, 201, 61, 0);
+            }
+        }
+
+        .kmd .btnd {
+            animation: pulse 2s infinite;
+            width: 100px;
+            display: inline-block;
+            color: #cbe4ff;
+            padding: 10px 10px;
+            font-size: 20px;
+            font-weight: 600;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(0, 176, 155, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            margin: 30px 0;
+            overflow: hidden;
+            border: none;
+            text-align: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btnd:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 176, 155, 0.6);
+        }
+
+        .btnd:active {
+            transform: translateY(0);
+        }
+
+        .btnd::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(25deg);
+            transition: all 0.6s;
+        }
+
+        .btnd:hover::after {
+            left: 120%;
+        }
     </style>
 </head>
 
@@ -105,8 +178,8 @@
         </div>
         <img src="https://cdn.wantuju.com/pngsucai/imgRegular/20210802/55a5ff34-0ad7-4017-9496-4a05a8525653%20_102388_wantuju.png"
             alt="图片加载失败">
+        <div class="kmd"><a class="btnd btn1" href="/b/thinklist.html">感谢名单</a></div>
     </div>
-
     </div>
     <script src="/js/main.js"></script>
 </body>
