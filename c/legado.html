@@ -3,21 +3,697 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Legado APP介绍</title>
+    <title>Legado - 开源电子书阅读器 - 洛娅橙</title>
     <meta name="author" content="洛娅橙">
-    <meta name="description" content="洛娅橙，阅读，APP，Legado，软件，介绍">
-    <meta name="keywords" content="洛娅橙,阅读,书源,luoyacheng,Legado,Legado APP">
+    <meta name="description" content="洛娅橙，改版阅读，阅读，APP，Legado，软件，介绍，luoyacheng，软件下载">
+    <meta name="keywords" content="洛娅橙,改版阅读,阅读,书源,luoyacheng,Legado,Legado APP,软件下载">
     <meta name="Robots" content="All">
     <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://gitee.com/lyc486/yuedu/raw/master/favicon.svg">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --shadow: 0 10px 20px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏 */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .github-btn {
+            background: var(--dark);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        
+        .github-btn:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            padding: 150px 0 80px;
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,0 Q500,80 1000,0 L1000,100 L0,100 Z" fill="white"></path></svg>');
+            background-size: 100% 100px;
+            background-repeat: no-repeat;
+            background-position: bottom;
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        
+        .hero-text {
+            flex: 1;
+            z-index: 2;
+        }
+        
+        .hero-image {
+            flex: 1;
+            text-align: center;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: white;
+            color: var(--primary);
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            margin-left: 15px;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .phone-mockup {
+            width: 280px;
+            height: 500px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+            border-radius: 28px;
+            padding: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .phone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: white;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .app-content {
+            padding: 20px;
+            height: calc(100% - 60px);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .book-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .book-cover {
+            width: 40px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 5px;
+        }
+        
+        /* 功能区域 */
+        .features {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 1.8rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        /* 下载区域 */
+        .download {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            text-align: center;
+        }
+        
+        .download-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .download-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .download-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            width: 200px;
+            transition: var(--transition);
+        }
+        
+        .download-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .download-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 动画 */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .floating {
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 
 <body>
-    <button class="open-btn" onclick="location.href='/'">☰</button>
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <i class="fas fa-book-open"></i>
+                    <span>Legado</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#features">功能特色</a>
+                    <a href="#download">下载</a>
+                    <a href="#docs">文档</a>
+                    <a href="#community">社区</a>
+                </div>
+                <a href="https://github.com/Luoyacheng/legado" class="github-btn">
+                    <i class="fab fa-github"></i>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>开源阅读新体验</h1>
+                    <p>Legado是一款专注于提供极致阅读体验的免费开源电子书阅读器。支持多种格式、自定义书源和个性化阅读设置。</p>
+                    <div class="hero-buttons">
+                        <a href="#download" class="btn">立即下载</a>
+                        <a href="#features" class="btn btn-outline">了解更多</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="phone-mockup floating">
+                        <div class="phone-screen">
+                            <div class="phone-header">
+                                <div class="logo">
+                                    <i class="fas fa-book-open"></i>
+                                    <span>Legado</span>
+                                </div>
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="app-content">
+                                <div class="book-item">
+                                    <div class="book-cover" style="background: #4cc9f0;"></div>
+                                    <div class="book-info">
+                                        <h4>三体</h4>
+                                        <p>刘慈欣 · 72% 已读</p>
+                                    </div>
+                                </div>
+                                <div class="book-item">
+                                    <div class="book-cover" style="background: #7209b7;"></div>
+                                    <div class="book-info">
+                                        <h4>活着</h4>
+                                        <p>余华 · 45% 已读</p>
+                                    </div>
+                                </div>
+                                <div class="book-item">
+                                    <div class="book-cover" style="background: #f72585;"></div>
+                                    <div class="book-info">
+                                        <h4>百年孤独</h4>
+                                        <p>加西亚·马尔克斯 · 28% 已读</p>
+                                    </div>
+                                </div>
+                                <div class="book-item">
+                                    <div class="book-cover" style="background: #4895ef;"></div>
+                                    <div class="book-info">
+                                        <h4>人类简史</h4>
+                                        <p>尤瓦尔·赫拉利 · 15% 已读</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能区域 -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>强大功能</h2>
+                <p>Legado提供了一系列强大的功能，让您的阅读体验更加舒适和个性化</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>多格式支持</h3>
+                    <p>支持本地TXT、EPUB格式文件的阅读，提供手动浏览和智能扫描两种阅读方式</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>个性化阅读</h3>
+                    <p>自由切换字体、颜色、背景、行距、段距、加粗、简繁转换等，打造专属阅读体验</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>自定义书源</h3>
+                    <p>通过设置规则抓取网页数据，一次搜索可以从所有导入的书源中查找书籍结果</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>云同步</h3>
+                    <p>支持备份到本地或WebDav，实现多设备同步，随时随地继续阅读</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>阅读优化</h3>
+                    <p>自动去除广告、修正错别字、统一排版标记，提供更纯净的阅读内容</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>开源免费</h3>
+                    <p>完全开源，无任何广告，代码透明，社区驱动持续改进</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 下载区域 -->
+    <section class="download" id="download">
+        <div class="container">
+            <div class="download-content">
+                <div class="section-title">
+                    <h2>立即体验</h2>
+                    <p>下载最新版本的Legado，开启您的开源阅读之旅</p>
+                </div>
+                <div class="download-options">
+                    <div class="download-card fade-in">
+                        <i class="fab fa-android"></i>
+                        <h3>Android</h3>
+                        <p>APK安装包</p>
+                        <a href="#" class="btn" style="margin-top: 15px;">下载</a>
+                    </div>
+                    <div class="download-card fade-in">
+                        <i class="fas fa-download"></i>
+                        <h3>GitHub</h3>
+                        <p>源码与发布</p>
+                        <a href="https://github.com/Luoyacheng/legado" class="btn" style="margin-top: 15px;">前往</a>
+                    </div>
+                    <div class="download-card fade-in">
+                        <i class="fas fa-cloud-download-alt"></i>
+                        <h3>Web版本</h3>
+                        <p>在线体验</p>
+                        <a href="#" class="btn" style="margin-top: 15px;">试用</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>关于Legado</h3>
+                    <p>Legado是一款专注于提供极致阅读体验的免费开源电子书阅读器，致力于传承和发扬开源精神。</p>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#features">功能特色</a></li>
+                        <li><a href="#download">下载</a></li>
+                        <li><a href="#docs">使用文档</a></li>
+                        <li><a href="#community">社区论坛</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>开发资源</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/Luoyacheng/legado">GitHub仓库</a></li>
+                        <li><a href="#">API文档</a></li>
+                        <li><a href="#">贡献指南</a></li>
+                        <li><a href="#">问题反馈</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">GitHub Issues</a></li>
+                        <li><a href="#">电子邮件</a></li>
+                        <li><a href="#">Telegram群组</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Legado开源阅读器. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
 
 
+    <script>
+        // 滚动动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const fadeInOnScroll = function() {
+                fadeElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.classList.add('visible');
+                    }
+                });
+            };
+            
+            // 初始检查
+            fadeInOnScroll();
+            
+            // 滚动时检查
+            window.addEventListener('scroll', fadeInOnScroll);
+        });
+    </script>
 </body>
 
 </html>
