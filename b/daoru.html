@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 
-<head>
-    <meta charset="utf-8">
-    <title>阅读导入</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="description" content="洛娅橙，开源阅读软件，书源、订阅源、字典、净化等json、txt文件导入，小说书籍地址导入,base64，链接净化,精华规则。">
-    <style>
+    <head>
+        <meta charset="utf-8">
+        <title>阅读导入</title>
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta name="description"
+            content="洛娅橙，开源阅读软件，书源、订阅源、字典、净化等json、txt文件导入，小说书籍地址导入,base64，链接净化,精华规则。">
+        <style>
         :root {
             --back-color: #fffbf0;
             --font-color: black;
         }
-
+        
         @media (prefers-color-scheme: dark) {
             :root {
                 --back-color: #1a1a1a;
                 --font-color: white;
             }
         }
-
+        
         html {
             background-color: var(--back-color);
             color: var(--font-color);
         }
-
+        
         .hidden {
             display: none;
         }
-
+        
         body {
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 80vh;
         }
-
+        
         textarea {
             font-size: 12px;
             color: var(--font-color);
@@ -45,13 +47,13 @@
             border-radius: 10px;
             border: 2px solid rgba(76, 175, 80, 0.3);
         }
-
+        
         textarea:focus {
             border-color: rgb(76, 175, 80);
             outline: none;
             box-shadow: 0 0 8px rgba(255, 107, 107, 0.3);
         }
-
+        
         button {
             user-select: none;
             color: white;
@@ -63,32 +65,32 @@
             transition: 0.3s;
             font-size: 16px;
         }
-
+        
         .an-s {
             transform: scale(0.8);
         }
-
+        
         button {
             margin: 10px;
         }
-
+        
         #btn1 {
             background-color: rgba(76, 175, 80, 0.9);
         }
-
+        
         #btn2 {
             background-color: rgba(175, 76, 80, 0.9);
         }
-
+        
         #btn3 {
             background-color: rgba(76, 80, 175, 0.9);
         }
-
+        
         #history {
             width: 90%;
             margin: 8px 2%;
         }
-
+        
         #history div {
             font-size: 12px;
             border-radius: 6px;
@@ -99,20 +101,20 @@
             overflow-wrap: break-word;
             word-break: break-word;
         }
-    </style>
-</head>
+        </style>
+    </head>
 
-<body>
-    <h1 class="hidden">在线导入-洛娅橙</h1>
-    <textarea id="copyt" rows="9" placeholder="在这里填写链接
+    <body>
+        <h1 class="hidden">在线导入-洛娅橙</h1>
+        <textarea id="copyt" rows="9" placeholder="在这里填写链接
 支持书源、订阅源、净化、字典等json或txt文件
 支持书籍网址（需要有对应的书源）
 支持data或base64加密链接"></textarea>
-    <button id="btn1" onclick="copy(1)">导入</button>
-    <button id="btn2" onclick="cleart()">清空</button>
-    <button id="btn3" onclick="copy(3)">净化</button>
-    <div id="history"></div>
-    <script>
+        <button id="btn1" onclick="copy(1)">导入</button>
+        <button id="btn2" onclick="cleart()">清空</button>
+        <button id="btn3" onclick="copy(3)">净化</button>
+        <div id="history"></div>
+        <script>
         function showHistory() {
             const historyDiv = document.getElementById('history');
             let history = JSON.parse(localStorage.getItem('importHistory') || '[]');
@@ -133,7 +135,7 @@
             const cpt = document.getElementById("copyt");
             let url = cpt.value;
             if (/[删除去消].*(?:[删除去掉].*[中汉我]|汉.*字|中.*文|文.*字)/.test(url)) url = url.replace(/[abphm]站|[一-ꀀ]/g, '');
-            url = url.replace(/[\s一-ꀀ，。？！；…“‘、’”]+$/, '').replace(/\s+|(?:\p{Emoji_Presentation}|\p{Emoji}[\uFE0F\u200d]+)+|\[(?:酷币|受虐滑稽|微笑|哈哈哈|呵呵|呲牙|可爱|可怜|皱眉|惊讶|微笑|坏笑|流泪|抱拳|色|强|doge笑哭|doge原谅ta|旺财|OK)\]/giu, '').replace(/(\/.+\.(?:json|txt|zip))(?:[^\/\?\-\_\.][\S\s]*)$/, '$1').replace(/^[\S\s]+?(?=https?:)/i, '').replace(/\u0026/g, '%26');
+            url = url.replace(/[\s一-ꀀ，。？！；…“‘、’”]+$/, '').replace(/\s+|(?:\p{Emoji_Presentation}|\p{Emoji}[\uFE0F\u200d]+)+|\[(?:酷币|受虐滑稽|微笑|哈哈哈|呵呵|呲牙|可爱|可怜|皱眉|惊讶|微笑|坏笑|流泪|抱拳|色|强|doge笑哭|doge原谅ta|旺财|OK)\]/giu, '').replace(/(\/.+\.(?:json|txt|zip))(?:[^\/\?\-\_\.][\S\s]*)$/, '$1').replace(/^[\S\s]*?(?=https?:)/i, '').replace(/\u0026/g, '%26');
             if (url.startsWith('data:')) url = atob(url.match(/^[^,]+,([^\s,]+)/)[1]);
             else if (/^[\da-z\+\/]{2,}=*$/i.test(url)) url = atob(url);
             setTimeout(() => {
@@ -153,8 +155,11 @@
                 else if (/\/.+\.(?:zip)/i.test(url)) {
                     window.location.href = 'legado://import/bookSource?src=' + url;
                 }
-                else {
+                else if(/(?:[\/\}]|html)$/.test(url)) {
                     window.location.href = 'legado://import/addToBookshelf?src=' + url;
+                }
+                else {
+                    window.location.href = 'legado://import/Source?src=' + url;
                 }
             }
             else if (x == 3) { cpt.value = url; }
@@ -169,7 +174,7 @@
             }, 300);
             cpt.value = '';
         }
-
+        
         let clearTimer = null;
         const btn2 = document.getElementById('btn2');
         btn2.addEventListener('pointerdown', function () {
@@ -185,9 +190,9 @@
         btn2.addEventListener('pointercancel', function () {
             clearTimeout(clearTimer);
         });
-
+        
         window.onload = showHistory;
-    </script>
-</body>
+        </script>
+    </body>
 
 </html>
