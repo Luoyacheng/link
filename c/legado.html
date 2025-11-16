@@ -29,13 +29,47 @@
             --success: #4bb543;
             --shadow: 0 10px 20px rgba(0,0,0,0.1);
             --transition: all 0.3s ease;
+            
+            /* 默认主题变量 */
+            --bg-color: #f5f7ff;
+            --text-color: #212529;
+            --card-bg: white;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --footer-bg: #212529;
+            --footer-text: white;
+            --footer-links: #aaa;
+            --hero-bg: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            --download-bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            --download-card-bg: white;
+            --feature-card-bg: white;
+            --section-title-color: #3a0ca3;
+            --section-desc-color: #666;
+        }
+        
+        /* 夜间模式变量 */
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --header-bg: rgba(30, 30, 30, 0.95);
+            --footer-bg: #0a0a0a;
+            --footer-text: #e0e0e0;
+            --footer-links: #aaa;
+            --hero-bg: linear-gradient(135deg, #2d3a8c 0%, #1a0d5c 100%);
+            --download-bg: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            --download-card-bg: #2a2a2a;
+            --feature-card-bg: #1e1e1e;
+            --section-title-color: #7b9eff;
+            --section-desc-color: #b0b0b0;
+            --shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
         
         body {
-            background-color: #f5f7ff;
-            color: var(--dark);
+            background-color: var(--bg-color);
+            color: var(--text-color);
             line-height: 1.6;
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         .container {
@@ -47,13 +81,14 @@
         
         /* 导航栏 */
         header {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--header-bg);
             box-shadow: var(--shadow);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             backdrop-filter: blur(10px);
+            transition: var(--transition);
         }
         
         .navbar {
@@ -83,7 +118,7 @@
         
         .nav-links a {
             text-decoration: none;
-            color: var(--dark);
+            color: var(--text-color);
             font-weight: 500;
             transition: var(--transition);
             position: relative;
@@ -126,26 +161,53 @@
             transform: translateY(-2px);
         }
         
+        /* 主题切换按钮 */
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 8px;
+            border-radius: 50%;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .theme-toggle:hover {
+            background: rgba(0,0,0,0.05);
+        }
+        
+        [data-theme="dark"] .theme-toggle:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
         /* 截图区域 */
         .hero {
             padding: 150px 0 80px;
-            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            background: var(--hero-bg);
             color: white;
             position: relative;
             overflow: hidden;
         }
         
-        .hero::before {
+        /* .hero::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,0 Q500,80 1000,0 L1000,100 L0,100 Z" fill="white"></path></svg>');
+            height: 50%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,0 Q500,80 1000,0 L1000,100 L0,100 Z" fill="%23f5f7ff"></path></svg>');
             background-size: 100% 100px;
             background-repeat: no-repeat;
             background-position: bottom;
+        } */
+        
+        [data-theme="dark"] .hero::before {
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0,0 Q500,80 1000,0 L1000,100 L0,100 Z" fill="%23121212"></path></svg>');
         }
         
         .hero-content {
@@ -180,12 +242,12 @@
         
         .btn {
             display: inline-block;
-            padding: 12px 30px;
-            background: white;
+            padding: 12px 20px;
+            background: var(--bg-color);
             color: var(--primary);
-            border-radius: 30px;
+            border-radius: 10px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 400;
             transition: var(--transition);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
@@ -223,6 +285,11 @@
             box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        [data-theme="dark"] .phone-mockup {
+            background: #2a2a2a;
         }
         
         .carousel-container {
@@ -283,7 +350,8 @@
         /* 功能区域 */
         .features {
             padding: 100px 0;
-            background: white;
+            background: var(--card-bg);
+            transition: var(--transition);
         }
         
         .section-title {
@@ -293,12 +361,12 @@
         
         .section-title h2 {
             font-size: 2.5rem;
-            color: var(--secondary);
+            color: var(--section-title-color);
             margin-bottom: 15px;
         }
         
         .section-title p {
-            color: #666;
+            color: var(--section-desc-color);
             max-width: 600px;
             margin: 0 auto;
         }
@@ -310,7 +378,7 @@
         }
         
         .feature-card {
-            background: white;
+            background: var(--feature-card-bg);
             border-radius: 15px;
             padding: 30px;
             box-shadow: var(--shadow);
@@ -321,6 +389,10 @@
         .feature-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        [data-theme="dark"] .feature-card:hover {
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
         }
         
         .feature-icon {
@@ -338,14 +410,15 @@
         
         .feature-card h3 {
             margin-bottom: 15px;
-            color: var(--secondary);
+            color: var(--section-title-color);
         }
         
         /* 下载区域 */
         .download {
             padding: 100px 0;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: var(--download-bg);
             text-align: center;
+            transition: var(--transition);
         }
         
         .download-content {
@@ -362,11 +435,11 @@
         }
         
         .download-card {
-            background: white;
+            background: var(--download-card-bg);
             border-radius: 15px;
-            padding: 30px;
+            padding: 10px;
             box-shadow: var(--shadow);
-            width: 200px;
+            width: 100px;
             transition: var(--transition);
         }
         
@@ -375,16 +448,17 @@
         }
         
         .download-card i {
-            font-size: 2.5rem;
+            font-size: 1.5rem;
             color: var(--primary);
-            margin-bottom: 15px;
+            margin-bottom: 5px;
         }
         
         /* 页脚 */
         footer {
-            background: var(--dark);
-            color: white;
+            background: var(--footer-bg);
+            color: var(--footer-text);
             padding: 60px 0 30px;
+            transition: var(--transition);
         }
         
         .footer-content {
@@ -408,13 +482,13 @@
         }
         
         .footer-links a {
-            color: #aaa;
+            color: var(--footer-links);
             text-decoration: none;
             transition: var(--transition);
         }
         
         .footer-links a:hover {
-            color: white;
+            color: var(--footer-text);
             padding-left: 5px;
         }
         
@@ -422,7 +496,7 @@
             text-align: center;
             padding-top: 30px;
             border-top: 1px solid #444;
-            color: #aaa;
+            color: var(--footer-links);
             font-size: 0.9rem;
         }
         
@@ -498,13 +572,16 @@
                 <div class="nav-links">
                     <a href="#features">功能特色</a>
                     <a href="#download">下载</a>
-                    <!-- <a href="#docs">文档</a> -->
-                    <!-- <a href="#community">社区</a> -->
                 </div>
-                <a href="https://github.com/Luoyacheng/legado" class="github-btn">
-                    <i class="fab fa-github"></i>
-                    GitHub
-                </a>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="theme-toggle" id="themeToggle" aria-label="切换主题">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="https://github.com/Luoyacheng/legado" class="github-btn">
+                        <i class="fab fa-github"></i>
+                        GitHub
+                    </a>
+                </div>
             </div>
         </div>
     </header>
@@ -516,7 +593,7 @@
                 <div class="hero-text">
                     <h1>开源阅读新体验</h1>
                     <p>Legado是一款专注于提供极致阅读体验的免费开源电子书阅读器。支持个性化阅读设置。</p>
-                    <p>本人在<a href="https://github.com/gedoor/legado">legado开源库</a>的基础上进行新功能开发。</p>
+                    <p>本人在<a href="https://github.com/gedoor/legado" style="color: white; text-decoration: underline;">legado开源库</a>的基础上进行新功能开发。</p>
                     <p>该界面为个人改动后的软件介绍。</p>
                     <div class="hero-buttons">
                         <a href="#download" class="btn">立即下载</a>
@@ -565,13 +642,6 @@
                 <p>Legado提供了一系列强大的功能，让您的阅读体验更加舒适和个性化</p>
             </div>
             <div class="features-grid">
-                <!-- <div class="feature-card fade-in">
-                    <div class="feature-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <h3>多格式支持</h3>
-                    <p>支持本地TXT、EPUB格式文件的阅读，提供手动浏览和智能扫描两种阅读方式</p>
-                </div> -->
                 <div class="feature-card fade-in">
                     <div class="feature-icon">
                         <i class="fas fa-palette"></i>
@@ -620,30 +690,24 @@
                     <p>下载最新版本，开启您的开源阅读之旅</p>
                 </div>
                 <div class="download-options">
-                    <!-- <div class="download-card fade-in">
+                    <div class="download-card fade-in">
                         <i class="fab fa-android"></i>
                         <h3>Android</h3>
                         <p>APK安装包</p>
-                        <a href="#" class="btn" style="margin-top: 15px;">下载</a>
-                    </div> -->
+                        <a href="https://yd.loyc.xyz/sigma/leagado_Sigma_正式版.apk" class="btn" style="margin-top: 5px;">下载</a>
+                    </div>
                     <div class="download-card fade-in">
                         <i class="fas fa-download"></i>
                         <h3>Gitee</h3>
                         <p>仓库下载</p>
-                        <a href="https://gitee.com/lyc486/legado/releases/tag/beta" class="btn" style="margin-top: 15px;">前往</a>
+                        <a href="https://gitee.com/lyc486/legado/releases/tag/beta" class="btn" style="margin-top: 5px;">前往</a>
                     </div>
                     <div class="download-card fade-in">
                         <i class="fas fa-download"></i>
                         <h3>GitHub</h3>
                         <p>仓库下载</p>
-                        <a href="https://github.com/Luoyacheng/legado/releases/tag/beta" class="btn" style="margin-top: 15px;">前往</a>
+                        <a href="https://github.com/Luoyacheng/legado/releases/tag/beta" class="btn" style="margin-top: 5px;">前往</a>
                     </div>
-                    <!-- <div class="download-card fade-in">
-                        <i class="fas fa-cloud-download-alt"></i>
-                        <h3>Web版本</h3>
-                        <p>在线体验</p>
-                        <a href="#" class="btn" style="margin-top: 15px;">试用</a>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -675,15 +739,16 @@
                         <!-- <li><a href="#">问题反馈</a></li> -->
                     </ul>
                 </div>
-                <!-- <div class="footer-column">
-                    <h3>联系我们</h3>
+                <div class="footer-column">
+                    <h3>联系我</h3>
                     <ul class="footer-links">
-                        <li><a href="#">GitHub Issues</a></li>
-                        <li><a href="#">电子邮件</a></li>
-                        <li><a href="#">Telegram群组</a></li>
+                        <li><a href="https://github.com/Luoyacheng/legado/issues">GitHub Issues</a></li>
+                        <!-- <li><a href="#">电子邮件</a></li> -->
+                        <li><a href="https://t.me/readsigma">Telegram频道</a></li>
                     </ul>
-                </div> -->
+                </div>
             </div>
+            <a href="/b/thinklist.html" style="display: block; width: fit-content; margin-left: auto;">感谢名单</a>
             <!-- <div class="copyright">
                 <p>&copy; 2023 Legado开源阅读器. 保留所有权利.</p>
             </div> -->
@@ -691,6 +756,48 @@
     </footer>
 
     <script>
+        // 主题切换功能
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // 检查本地存储的主题设置
+        const currentTheme = localStorage.getItem('theme') || 
+                           (prefersDarkScheme.matches ? 'dark' : 'light');
+        
+        // 应用主题
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            // 更新图标
+            if (theme === 'dark') {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+        
+        // 初始化主题
+        setTheme(currentTheme);
+        
+        // 切换主题
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+        });
+        
+        // 监听系统主题变化
+        prefersDarkScheme.addEventListener('change', (e) => {
+            // 如果用户没有手动设置过主题，则跟随系统
+            if (!localStorage.getItem('theme')) {
+                setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+
         // 轮播图功能
         document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('.carousel-slide');
