@@ -326,6 +326,11 @@
                 margin: 0.2rem 0;
             }
 
+            .sponsor-amount.small {
+                font-size: 0.8rem;
+                margin: 0.2rem 0;
+            }
+
             .thank-you {
                 font-size: 0.9rem;
                 margin-top: 0.8rem;
@@ -454,6 +459,7 @@
                 sponsors.forEach(sponsor => {
                     const card = document.createElement('div');
                     card.classList.add('sponsor-card');
+                    const message = sponsor.message || "支持";
                     card.innerHTML = `
                 <div class="card-front">
                     <div class="sponsor-rank">${sponsor.rank}</div>
@@ -463,7 +469,7 @@
                 </div>
                 <div class="card-back">
                     <div class="sponsor-name">${sponsor.name}</div>
-                    <div class="sponsor-amount">${sponsor.message}</div>
+                    <div class="sponsor-amount ${message.length>9?"small":"normal"}">${message}</div>
                     <div class="sponsor-message">${sponsor.time2}</div>
                 </div>`;
                     card.addEventListener('click', function () {
