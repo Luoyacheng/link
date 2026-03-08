@@ -139,6 +139,11 @@
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
 
+        .sponsor-amount.small {
+            font-size: 1.6rem;
+            margin: 0.2rem 0;
+        }
+
         .sponsor-message {
             font-style: italic;
             text-align: center;
@@ -469,7 +474,7 @@
                 </div>
                 <div class="card-back">
                     <div class="sponsor-name">${sponsor.name}</div>
-                    <div class="sponsor-amount ${message.length>9?"small":"normal"}">${message}</div>
+                    <div class="sponsor-amount ${message.length > 9 ? "small" : "normal"}">${message}</div>
                     <div class="sponsor-message">${sponsor.time2}</div>
                 </div>`;
                     card.addEventListener('click', function () {
