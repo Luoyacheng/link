@@ -25,6 +25,12 @@ function checkHash() {
     window.scrollTo(0, 0);
 }
 
+//头图处理
+const toutuImg = document.getElementById('toutu');
+if (toutuImg) {
+    toutuImg.src = "https://gd-hbimg.huaban.com/d2e4dd6928850ce74c0a0318692a4fc238c7dfbf34025-1Z8m0l_fw1200webp";
+}
+
 //侧边栏内容处理
 const sidebar = document.getElementById('mySidebar');
 if (sidebar) {
@@ -46,7 +52,7 @@ function qiehuan(x) {
 function isBarElement(el) {
     return el.classList && el.classList.contains('bar');
 }
-let activeBar = null; // 记录当前激活的bar元素
+var activeBar = null; // 记录当前激活的bar元素
 
 document.addEventListener('pointerdown', function (e) {
     let tar = e.target;

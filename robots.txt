@@ -7,4 +7,4 @@ Disallow: /*.gif$
 Disallow: /*.webp$
 Disallow: /b/感谢投喂.html
 Disallow: /b/cdx.html
-Sitemap: https://loyc.xyz/sitemap.xml
+Sitemap: https://lyc.ydz6.com/sitemap.xml
